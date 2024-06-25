@@ -1,0 +1,28 @@
+{
+  "name": "cloudflare-manager",
+  "version": "1.0.0",
+  "description": "Gerenciador de fácil uso para cloudflare",
+  "main": "dist/app.js",
+  "type": "module",
+  "imports": {
+    "@/*": [
+       "src/*"
+    ]
+ },
+  "scripts": {
+    "build": "if [ -d 'dist' ]; then rm -r ./dist; fi && tsc && tsc-alias",
+    "dev": "tsx src/app.ts",
+    "start": "node --env-file=.env dist/app.js"
+  },
+  "keywords": [
+    "cloudflare",
+    "manager"
+  ],
+  "author": "Ashu11-A",
+  "license": "MIT",
+  "devDependencies": {
+    "tsc-alias": "^1.8.10",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
+  }
+}
