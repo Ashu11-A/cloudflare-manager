@@ -1,8 +1,7 @@
 import Enmap from "enmap";
 
-const all: Array<Enmap> = []
-
 export default class Cache<Result>{
+    static all: Array<Enmap> = []
     private cache!: Enmap<string, string>
 
     constructor(key: string) {
@@ -10,11 +9,11 @@ export default class Cache<Result>{
     }
 
     private find (key: string) {
-        return all.find((cache) => cache.name === key)
+        return Cache.all.find((cache) => cache.name === key)
     }
     private create (key: string) {
         const newCache = new Enmap({ name: key })
-        all.push(newCache)
+        Cache.all = [...Cache.all, newCache]
         return newCache
     }
     private loader(key: string) {
@@ -31,4 +30,6 @@ export default class Cache<Result>{
         this.cache.set('data', JSON.stringify(data))
         return this
     }
+    exist() { return this.cache.has('data') }
+    clear() { return this.cache.clear() }
 }
