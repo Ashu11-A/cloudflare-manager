@@ -2,55 +2,34 @@ import { __dirname } from '@/index.js';
 import { PageStructure, PageTypes } from '@/types/page.js';
 import { glob } from "glob";
 import { join } from "path";
-import Cache from './cache.js';
 
-export class Page<PageTyper extends PageTypes>{
-    static all: Page<PageTypes>[] = []
-    static find(name: string) { return Page.all.find((page) => page.name === name) }
+export class Page<PageTyper extends PageTypes> {
+    static all: Page<PageTypes>[] = [];
+    static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
-    public name: string
-    public type: PageTypes
-    public run: PageStructure<PageTyper>['run']
-
-    public next?: string
-    public previous?: string
-
-    public requirements?: Cache<any>[]
-    public loaders?: (() => Promise<any>)[]
-    public action?: string
+    interaction: PageStructure<PageTyper>;
 
     constructor(options: PageStructure<PageTyper>) {
-        const { name, type, loaders, next, requirements, run } = options
-        this.name = name
-        this.type = type
-        this.next = next
-        this.requirements = requirements
-        this.loaders = loaders
-        this.run = run
+        this.interaction = options
 
-        if (type === PageTypes.SubCommand) {
-            const { previous } = options
-            this.previous = previous
-        }
-    
-        Page.all.push(this)
+        Page.all.push(this);
     }
 
-    async reply (action: string): Promise<any> {
+    async reply (action: 'reload' | 'back' | 'exit' | string): Promise<any> {
         switch (action) {
             case 'reload':
-                if (this.requirements === undefined || this.loaders === undefined) return await Page.execute(this.name)
-                for (const cache of this.requirements) {
+                if (this.interaction.requirements === undefined || this.interaction.loaders === undefined) return await Page.execute(this.interaction.name)
+                for (const cache of this.interaction.requirements) {
                     cache.clear()
                 }
 
-                for (const fn of this.loaders) {
+                for (const fn of this.interaction.loaders) {
                     await fn()
                 }
-                Page.execute(this.name)
+                Page.execute(this.interaction.name)
                 break
             case 'back':
-                if (this.type === PageTypes.SubCommand) return await Page.execute(this.previous as string)
+                if (this.interaction.type === PageTypes.SubCommand) return await Page.execute(this.interaction.previous as string)
                 break
             case 'exit':
                 process.exit()
@@ -71,23 +50,23 @@ export class Page<PageTyper extends PageTypes>{
         if (page === undefined) throw new Error('404 | Page not found!')
         
         if (
-            page.requirements !== undefined &&
-            page.loaders !== undefined &&
-            page.requirements.length > 0
+            page.interaction.requirements !== undefined &&
+            page.interaction.loaders !== undefined &&
+            page.interaction.requirements.length > 0
         ) {
-            for (const cache of page.requirements) {
+            for (const cache of page.interaction.requirements) {
                 if (cache.exist()) continue
                 
-                for (const fn of page.loaders) await fn()
+                for (const fn of page.interaction.loaders) await fn()
             }
         }
         
-        switch (page.type) {
+        switch (page.interaction.type) {
         case PageTypes.Command:
-            await page.run(page)
+            await page.interaction.run(page)
             break
         case PageTypes.SubCommand:
-            await page.run(page)
+            await page.interaction.run(page)
         }
     }
 }

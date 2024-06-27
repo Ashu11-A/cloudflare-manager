@@ -12,20 +12,19 @@ type PageBase = {
     loaders?: (() => Promise<any>)[]
 }
 
-
 export type PageProps<PageTyper extends PageTypes> = PageBase & (
     PageTyper extends PageTypes.Command 
     ? {
         type: PageTypes.Command,
         next: string
-        run:(options: Page<PageTypes>) => Promise<void>
+        run:(options: Page<PageTyper>) => Promise<void>
     }
-    : PageTyper extends PageTypes.SubCommand 
+    : PageTyper extends PageTypes.SubCommand
     ? {
         type: PageTypes.SubCommand,
         previous: string
         next?: string
-        run:(options: Page<PageTypes>) => Promise<void>
+        run:(options: Page<PageTyper>) => Promise<void>
     }
     : never
 )

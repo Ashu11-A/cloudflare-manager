@@ -3,7 +3,7 @@ import { Page } from "@/class/pages.js";
 import { Questions } from "@/class/questions.js";
 import { PageTypes } from "@/types/page.js";
 
-new Page({
+new Page ({
     name: 'zones',
     type: PageTypes.Command,
     next: 'options',
@@ -20,7 +20,7 @@ new Page({
         const zoneSelected = response.split('_')
         if (zoneSelected.length === 2) {
             zone.save({ name: zoneSelected[0], id: zoneSelected[1] })
-            options.reply('options')
+            options.reply(options.interaction.next)
             return
         }
         options.reply(response)
