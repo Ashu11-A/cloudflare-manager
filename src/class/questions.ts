@@ -14,16 +14,16 @@ export class Questions {
         return result.value
     }
 
-    async select (options: { message: string, choices: ListChoiceOptions[], type?: ListQuestion['type'] | CheckboxQuestion['type'], isCommand?: boolean }): Promise<string> {
-        let { choices, message, isCommand, type } = options
-
+    async select (options: { message: string, choices: ListChoiceOptions[], type?: ListQuestion['type'] | CheckboxQuestion['type'], pageName: string }): Promise<string> {
+        let { choices, message, pageName, type } = options
+        const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes>
         const footerBar: ListChoiceOptions[] = []
 
-        if (!(isCommand ?? false)) footerBar.push({
+        if (pageSelect.interaction.type !== PageTypes.Option) footerBar.push({
             name: '🔄 Recarregar',
             value: 'reload'
         })
-        if (!(isCommand ?? false)) footerBar.push({
+        if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
             name: '↩️  Voltar',
             value: 'back'
         })
@@ -42,7 +42,7 @@ export class Questions {
                 new inquirer.Separator(),
                 ...footerBar,
             ],
-            message: page.get() !== 'zones' ? `[${zone.get().name}] - ${message}` : message
+            message: !['zones', null].includes(page.get()) ? `[${zone.get().name}] - ${message}` : message
         })
         return result.value as string
     }

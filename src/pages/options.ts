@@ -11,14 +11,11 @@ new Page({
     async run(options) {
         const result = await new Questions().select({
             message: `📂 Opções disponiveis`,
+            pageName: options.interaction.name,
             choices: [
                 {
                     name: '🌐 DNS',
                     value: 'dns'
-                },
-                {
-                    name: '✨ Ip Dynamic for DNS',
-                    value: 'dynamic_dns'
                 },
             ]
         })
