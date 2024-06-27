@@ -1,5 +1,5 @@
 import { Page } from './class/pages.js';
+import { page } from './index.js';
 
 await Page.register()
-// const savedPage = Page.all.find((page) => page.name === actualPage.get())
-Page.execute('zones')
+Page.execute(page.get() ?? 'zones')

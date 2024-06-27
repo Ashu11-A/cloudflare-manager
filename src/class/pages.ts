@@ -1,4 +1,4 @@
-import { __dirname } from '@/index.js';
+import { __dirname, page } from '@/index.js';
 import { PageStructure, PageTypes } from '@/types/page.js';
 import { glob } from "glob";
 import { join } from "path";
@@ -34,6 +34,7 @@ export class Page<PageTyper extends PageTypes> {
             case 'exit':
                 process.exit()
             default:
+                page.save(action)
                 Page.execute(action)
         }
     }
