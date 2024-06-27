@@ -6,7 +6,7 @@ import { PageTypes } from "@/types/page.js";
 new Page({
     name: 'options',
     requirements: [zone],
-    type: PageTypes.SubCommand,
+    type: PageTypes.Option,
     previous: 'zones',
     async run(options) {
         const result = await new Questions().select({

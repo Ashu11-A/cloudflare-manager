@@ -63,6 +63,9 @@ export class Page<PageTyper extends PageTypes> {
         }
         
         switch (page.interaction.type) {
+        case PageTypes.Option:
+            await page.interaction.run(page)
+            break
         case PageTypes.Command:
             await page.interaction.run(page)
             break

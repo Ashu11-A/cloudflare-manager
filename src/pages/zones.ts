@@ -13,7 +13,7 @@ new Page ({
     async run(options) {
         const response = await new Questions().select({
             message: '🚧 Selecione a zona que deseja modificar',
-            isCommand: true,
+            pageName: options.interaction.name,
             choices: zones.get().map((zone)=> ({
                 name: zone.name,
                 value: `${zone.name}_${zone.id}`
