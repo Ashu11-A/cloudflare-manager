@@ -2,6 +2,7 @@ import { client, zone, zones } from "@/index.js";
 import { Page } from "@/class/pages.js";
 import { Questions } from "@/class/questions.js";
 import { PageTypes } from "@/types/page.js";
+import { ListChoiceOptions } from "inquirer";
 
 new Page ({
     name: 'zones',
@@ -11,11 +12,12 @@ new Page ({
     requirements: [zones],
     async run(options) {
         const response = await new Questions().select({
-            message: 'Selecione a zona que deseja modificar',
+            message: '🚧 Selecione a zona que deseja modificar',
+            isCommand: true,
             choices: zones.get().map((zone)=> ({
-                title: zone.name,
+                name: zone.name,
                 value: `${zone.name}_${zone.id}`
-            }))
+            } satisfies ListChoiceOptions))
         })
         const zoneSelected = response.split('_')
         if (zoneSelected.length === 2) {

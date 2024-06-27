@@ -21,6 +21,7 @@
   "author": "Ashu11-A",
   "license": "MIT",
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^20.14.9",
     "@types/prompts": "^2.4.9",
     "tsc-alias": "^1.8.10",
@@ -32,6 +33,6 @@
     "dotenv": "^16.4.5",
     "enmap": "^6.0.2",
     "glob": "^10.4.2",
-    "prompts": "^2.4.2"
+    "inquirer": "^9.2.23"
   }
 }

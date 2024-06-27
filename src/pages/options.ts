@@ -10,13 +10,16 @@ new Page({
     previous: 'zones',
     async run(options) {
         const result = await new Questions().select({
-            message: `Opções disponiveis para ${zone.get().name}`,
-            isSubCommand: true,
+            message: `📂 Opções disponiveis`,
             choices: [
                 {
-                    title: 'DNS',
+                    name: '🌐 DNS',
                     value: 'dns'
-                }
+                },
+                {
+                    name: '✨ Ip Dynamic for DNS',
+                    value: 'dynamic_dns'
+                },
             ]
         })
         options.reply(result)
