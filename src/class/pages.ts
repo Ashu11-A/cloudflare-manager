@@ -18,7 +18,10 @@ export class Page<PageTyper extends PageTypes> {
     async reply (action: 'reload' | 'back' | 'exit' | string): Promise<any> {
         switch (action) {
             case 'reload':
-                if (this.interaction.requirements === undefined || this.interaction.loaders === undefined) return await Page.execute(this.interaction.name)
+                if (this.interaction.requirements === undefined || this.interaction.loaders === undefined) {
+                    Page.execute(this.interaction.name)
+                    return
+                }
                 for (const cache of this.interaction.requirements) {
                     cache.clear()
                 }
@@ -29,7 +32,10 @@ export class Page<PageTyper extends PageTypes> {
                 Page.execute(this.interaction.name)
                 break
             case 'back':
-                if (this.interaction.type === PageTypes.SubCommand) return await Page.execute(this.interaction.previous as string)
+                if (this.interaction.type !== PageTypes.Command) {
+                    page.save(this.interaction.previous)
+                    Page.execute(this.interaction.previous)
+                }
                 break
             case 'exit':
                 process.exit()
