@@ -40,7 +40,7 @@ export class Page<PageTyper extends PageTypes> {
     }
 
     static async register () {
-        const pages = await glob('pages/*.{ts,js}', { cwd: __dirname })
+        const pages = await glob('pages/**/*.{ts,js}', { cwd: __dirname })
         for (const page of pages) {
             await import(join(__dirname, page))
         }
