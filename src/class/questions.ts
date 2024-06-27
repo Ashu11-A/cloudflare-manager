@@ -1,13 +1,14 @@
 import { page, zone } from '@/index.js'
 import 'dotenv/config'
-import inquirer, { CheckboxQuestion, InputQuestion, ListChoiceOptions, ListQuestion, QuestionAnswer } from 'inquirer'
-import prompts from 'prompts'
+import inquirer, { CheckboxQuestion, ListChoiceOptions, ListQuestion } from 'inquirer'
+import { Page } from './pages.js'
+import { PageTypes } from '@/types/page.js'
 
 export class Questions {
     async ask (message: string): Promise<string> {
-        const result = await prompts({
+        const result = await inquirer.prompt({
             name: 'value',
-            type: 'text',
+            type: 'input',
             message
         })
         return result.value
