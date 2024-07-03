@@ -3,7 +3,7 @@ import { Questions } from "@/class/questions.js";
 import { zone } from "@/index.js";
 import { PageTypes } from "@/types/page.js";
 
-new Page({
+export default new Page({
     name: 'dns',
     previous: 'options',
     type: PageTypes.SubCommand,
@@ -34,7 +34,9 @@ new Page({
                     value: 'dns-search'
                 }
             ]
-        })
+        }, options.isTest)
+        options.setResult(response)
         options.reply(response)
+        return options
     }
 })

@@ -3,19 +3,24 @@ import { PageStructure, PageTypes } from '@/types/page.js';
 import { glob } from "glob";
 import { join } from "path";
 
-export class Page<PageTyper extends PageTypes> {
+export class Page<PageTyper extends PageTypes, Req = any> {
     static all: Page<PageTypes>[] = [];
     static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
-    interaction: PageStructure<PageTyper>;
+    interaction: PageStructure<PageTyper, Req>;
+    isTest?: boolean
+    result?: string
 
-    constructor(options: PageStructure<PageTyper>) {
+    constructor(options: PageStructure<PageTyper, Req>) {
         this.interaction = options
-
         Page.all.push(this);
     }
 
-    async reply (action: 'reload' | 'back' | 'exit' | string): Promise<any> {
+    async setResult(result: string) {
+        this.result = result
+    }
+
+    async reply(action: 'reload' | 'back' | 'exit' | string): Promise<any> {
         switch (action) {
             case 'reload':
                 if (this.interaction.requirements === undefined || this.interaction.loaders === undefined) {
@@ -45,17 +50,17 @@ export class Page<PageTyper extends PageTypes> {
         }
     }
 
-    static async register () {
+    static async register() {
         const pages = await glob('pages/**/*.{ts,js}', { cwd: __dirname })
         for (const page of pages) {
             await import(join(__dirname, page))
         }
     }
 
-    static async execute (name: string) {
+    static async execute(name: string) {
         const page = this.find(name)
         if (page === undefined) throw new Error('404 | Page not found!')
-        
+
         if (
             page.interaction.requirements !== undefined &&
             page.interaction.loaders !== undefined &&
@@ -63,20 +68,20 @@ export class Page<PageTyper extends PageTypes> {
         ) {
             for (const cache of page.interaction.requirements) {
                 if (cache.exist()) continue
-                
+
                 for (const fn of page.interaction.loaders) await fn()
             }
         }
-        
+
         switch (page.interaction.type) {
-        case PageTypes.Option:
-            await page.interaction.run(page)
-            break
-        case PageTypes.Command:
-            await page.interaction.run(page)
-            break
-        case PageTypes.SubCommand:
-            await page.interaction.run(page)
+            case PageTypes.Option:
+                await page.interaction.run(page)
+                break
+            case PageTypes.Command:
+                await page.interaction.run(page)
+                break
+            case PageTypes.SubCommand:
+                await page.interaction.run(page)
         }
     }
 }

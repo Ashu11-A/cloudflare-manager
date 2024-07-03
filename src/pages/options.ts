@@ -3,7 +3,7 @@ import { Questions } from "@/class/questions.js";
 import { zone } from "@/index.js";
 import { PageTypes } from "@/types/page.js";
 
-new Page({
+export default new Page({
     name: 'options',
     requirements: [zone],
     type: PageTypes.Option,
@@ -18,7 +18,9 @@ new Page({
                     value: 'dns'
                 },
             ]
-        })
+        }, options.isTest)
+        options.setResult(result)
         options.reply(result)
+        return options
     }
 })

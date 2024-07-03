@@ -8,32 +8,53 @@ export enum PageTypes {
 }
 
 type PageBase = {
+    /**
+     * Page name
+     */
     name: string,
-    requirements?: Cache<any>[]
-    loaders?: (() => Promise<any>)[]
+    /**
+     * This will be executed if a request is not completed
+     * @type {Array<Function<Promise<any>>>}
+     */
+    loaders?: (() => Promise<any>)[],
 }
 
-export type PageProps<PageTyper extends PageTypes> = PageBase & (
+export type PageProps<PageTyper extends PageTypes, Req = any> = PageBase & (
     PageTyper extends PageTypes.Command 
     ? {
         type: PageTypes.Command
         next: string
-        run:(options: Page<PageTyper>) => Promise<void>
+        /**
+         * Requirements that the page needs
+         * @type {Cache<Req>[]}
+         */
+        requirements: Cache<Req>[]
+        run:(options: Page<PageTyper, Req>) => Promise<Page<PageTyper, Req>>
     }
     : PageTyper extends PageTypes.SubCommand
     ? {
         type: PageTypes.SubCommand
         previous: string
         next?: string
-        run:(options: Page<PageTyper>) => Promise<void>
+        /**
+         * Requirements that the page needs
+         * @type {Cache<Req>[]}
+         */
+        requirements: Cache<Req>[]
+        run:(options: Page<PageTyper, Req>) => Promise<Page<PageTyper, Req>>
     }
     : PageTyper extends PageTypes.Option
     ? {
         type: PageTypes.Option
         previous: string
-        run:(options: Page<PageTyper>) => Promise<void>
+        /**
+         * Requirements that the page needs
+         * @type {Cache<Req>[]}
+         */
+        requirements: Cache<Req>[]
+        run:(options: Page<PageTyper, Req>) => Promise<Page<PageTyper, Req>>
     }
     : never
 )
 
-export type PageStructure<PageTyper extends PageTypes> = PageProps<PageTyper>
+export type PageStructure<PageTyper extends PageTypes, TRequirements> = PageProps<PageTyper, TRequirements>
