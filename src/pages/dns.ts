@@ -34,8 +34,8 @@ export default new Page({
                     value: 'dns-search'
                 }
             ]
-        }, options.isTest)
-        options.setResult(response)
+        })
+
         options.reply(response)
         return options
     }

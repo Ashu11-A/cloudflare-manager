@@ -18,8 +18,8 @@ export default new Page({
                     value: 'dns'
                 },
             ]
-        }, options.isTest)
-        options.setResult(result)
+        })
+
         options.reply(result)
         return options
     }

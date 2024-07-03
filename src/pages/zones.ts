@@ -19,17 +19,16 @@ export default new Page ({
                 name: zone.name,
                 value: `${zone.name}_${zone.id}`
             } satisfies ListChoiceOptions))
-        }, options.isTest)
-
-        options.setResult(response)
-
+        })
         const zoneSelected = response.split('_')
+
         if (zoneSelected.length === 2) {
             zone.save({ name: zoneSelected[0], id: zoneSelected[1] })
             options.reply(options.interaction.next)
-            return options
+        } else {
+            options.reply(response)
         }
-        options.reply(response)
+
         return options
     }
 })

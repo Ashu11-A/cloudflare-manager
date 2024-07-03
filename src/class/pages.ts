@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { __dirname, page } from '@/index.js';
 import { PageStructure, PageTypes } from '@/types/page.js';
 import { glob } from "glob";
@@ -8,7 +9,6 @@ export class Page<PageTyper extends PageTypes, Req = any> {
     static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
     interaction: PageStructure<PageTyper, Req>;
-    isTest?: boolean
     result?: string
 
     constructor(options: PageStructure<PageTyper, Req>) {
@@ -21,6 +21,8 @@ export class Page<PageTyper extends PageTypes, Req = any> {
     }
 
     async reply(action: 'reload' | 'back' | 'exit' | string): Promise<any> {
+        if (process.env.isTest) return this.setResult(action)
+
         switch (action) {
             case 'reload':
                 if (this.interaction.requirements === undefined || this.interaction.loaders === undefined) {

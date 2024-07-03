@@ -11,13 +11,12 @@ jest.unstable_mockModule('../../src/index.js', () => ({
 
 test('zones page should call zones.save with the selected zone', async () => {
   const { zones } = await import('../../src/index.js');
-  const options = { loaders: [], requirements: [zones], reply: jest.fn() };
+  const options = { loaders: [], requirements: [] };
 
   Zone.interaction.requirements = [zones]
-  Zone.isTest = true
 
   const zone = Object.assign(Zone, options)
   const result = await Zone.interaction.run(zone)
 
-  expect(result.result).toEqual('zone1_1')
+  expect(result.result).toEqual('options')
 });
