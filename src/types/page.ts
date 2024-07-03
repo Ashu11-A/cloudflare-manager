@@ -1,5 +1,5 @@
-import Cache from "@/class/cache.js"
-import { Page } from "@/class/pages.js"
+import Cache from '@/class/cache.js'
+import { Page } from '@/class/pages.js'
 
 export enum PageTypes {
     Command = 'Command',
