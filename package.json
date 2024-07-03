@@ -13,7 +13,7 @@
     "build": "if [ -d 'dist' ]; then rm -r ./dist; fi && tsc && tsc-alias",
     "dev": "tsx src/app.ts",
     "start": "node --env-file=.env dist/app.js",
-    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "isTest=True node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "cloudflare",

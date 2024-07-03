@@ -2,14 +2,16 @@ import 'dotenv/config'
 import Cloudflare from 'cloudflare'
 import { readFile, writeFile } from 'fs/promises'
 import { Questions } from '@/class/questions.js'
+import { existsSync } from 'fs'
 
 const question = new Questions()
+
 
 export async function checker() {
     let email: string | undefined
     let key: string | undefined
-    let data = await readFile('.env', { encoding: 'utf-8' }) ?? ''
-
+    let data = existsSync('.env') ? await readFile('.env', { encoding: 'utf-8' }) ?? '' : ''
+    
     if ([undefined, ""].includes(process.env.CLOUDFLARE_EMAIL)) {
         console.log('Email do cloudflare está indefinido!')
         email = await question.ask('Email do Cloudflare')
@@ -39,11 +41,11 @@ export async function checker() {
 }
 
 const client = async () => {
-    await checker();
+    if (!process.env.isTest) await checker();
     (await import('dotenv')).config({ override: true })
     return new Cloudflare({
-        apiEmail: process.env.CLOUDFLARE_EMAIL,
-        apiKey: process.env.CLOUDFLARE_API_KEY
+        apiEmail: process.env.CLOUDFLARE_EMAIL ?? '',
+        apiKey: process.env.CLOUDFLARE_API_KEY ?? ''
     })
 }
 
