@@ -3,8 +3,10 @@ import Enmap from 'enmap'
 export default class Cache<Result>{
   static all: Array<Enmap> = []
   private cache!: Enmap<string, string>
+  public name: string
 
   constructor(key: string) {
+    this.name = key
     this.loader(key)
   }
 

@@ -3,6 +3,10 @@ import { __dirname, page } from '@/index.js'
 import { PageStructure, PageTypes } from '@/types/page.js'
 import { glob } from 'glob'
 import { join } from 'path'
+import ora from 'ora'
+import chalk from 'chalk'
+
+const spinner = ora()
 
 export class Page<PageTyper extends PageTypes, Req = any> {
   static all: Page<PageTypes>[] = []
@@ -29,13 +33,21 @@ export class Page<PageTyper extends PageTypes, Req = any> {
         Page.execute(this.interaction.name)
         return
       }
-      for (const cache of this.interaction.requirements) {
+
+      spinner.start('Limpando cache...')
+      for (const [index, cache] of Object.entries(this.interaction.requirements)) {
+        spinner.text = `Limpando cache ${chalk.green(Number(index) + 1)}...`
         cache.clear()
       }
+      spinner.stop()
 
-      for (const fn of this.interaction.loaders) {
+      spinner.start('Carregando novos dados...')
+      for (const [index, fn] of Object.entries(this.interaction.loaders)) {
+        spinner.text = `Carregando loaders ${chalk.green(Number(index) + 1)}`
         await fn()
       }
+      spinner.stop()
+
       Page.execute(this.interaction.name)
       break
     case 'back':
@@ -66,14 +78,19 @@ export class Page<PageTyper extends PageTypes, Req = any> {
 
     if (
       page.interaction.requirements !== undefined &&
-            page.interaction.loaders !== undefined &&
-            page.interaction.requirements.length > 0
+        page.interaction.loaders !== undefined &&
+        page.interaction.requirements.length > 0
     ) {
+      spinner.start()
       for (const cache of page.interaction.requirements) {
         if (cache.exist()) continue
 
-        for (const fn of page.interaction.loaders) await fn()
+        for (const [index, fn] of Object.entries(page.interaction.loaders)) {
+          spinner.text = `Carregando loaders ${chalk.green(Number(index) + 1)}`
+          await fn()
+        }
       }
+      spinner.stop()
     }
 
     switch (page.interaction.type) {
