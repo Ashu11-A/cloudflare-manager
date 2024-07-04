@@ -18,5 +18,5 @@ test('zones page should call zones.save with the selected zone', async () => {
   const option = Object.assign(Options, options)
   const result = await option.interaction.run(option)
 
-  expect(result.result).toEqual('dns')
+  expect(result.result).toEqual('analytics')
 })
