@@ -14,9 +14,29 @@ export default new Page({
       pageName: options.interaction.name,
       choices: [
         {
+          name: '📊 Analytics',
+          value: 'analytics'
+        },
+        {
           name: '🌐 DNS',
           value: 'dns'
         },
+        {
+          name: '🔒 SSL/TLS',
+          value: 'ssl/tls'
+        },
+        {
+          name: '🛡️  Security',
+          value: 'security'
+        },
+        {
+          name: '📥 Caching',
+          value: 'caching'
+        },
+        {
+          name: '📡 Network',
+          value: 'network'
+        }
       ]
     })
 

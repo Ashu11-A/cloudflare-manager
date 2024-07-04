@@ -57,8 +57,10 @@
     "cloudflare": "^3.4.0",
     "dotenv": "^16.4.5",
     "enmap": "^6.0.2",
+    "enquirer": "^2.4.1",
     "glob": "^10.4.2",
     "inquirer": "^9.3.3",
+    "inquirer-autocomplete-standalone": "^0.8.1",
     "is-installed-globally": "^1.0.0",
     "ora": "^8.0.1"
   }
