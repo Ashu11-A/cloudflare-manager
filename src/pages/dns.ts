@@ -6,7 +6,7 @@ import { PageTypes } from '@/types/page.js'
 export default new Page({
   name: 'dns',
   previous: 'options',
-  type: PageTypes.SubCommand,
+  type: PageTypes.Option,
   requirements: [zone],
   async run(options) {
     const response = await new Questions().select({

@@ -29,6 +29,10 @@ export class Questions {
       name: '↩️  Voltar',
       value: 'back'
     })
+    if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
+      name: '📍 Home',
+      value: 'zones'
+    })
     footerBar.push({
       name: '❌ Sair',
       value: 'exit',
