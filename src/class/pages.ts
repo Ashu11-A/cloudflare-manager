@@ -1,10 +1,11 @@
-import 'dotenv/config'
 import { __dirname, page } from '@/index.js'
 import { PageStructure, PageTypes } from '@/types/page.js'
-import { glob } from 'glob'
-import { join } from 'path'
-import ora from 'ora'
 import chalk from 'chalk'
+import 'dotenv/config'
+import { glob } from 'glob'
+import ora from 'ora'
+import { join } from 'path'
+import Cache from './cache.js'
 
 const spinner = ora()
 
@@ -35,7 +36,7 @@ export class Page<PageTyper extends PageTypes, Req = any> {
       }
 
       spinner.start('Limpando cache...')
-      for (const [index, cache] of Object.entries(this.interaction.requirements)) {
+      for (const [index, cache] of Object.entries(this.interaction.requirements) as unknown as [string, Cache<any>][]) {
         spinner.text = `Limpando cache ${chalk.green(Number(index) + 1)}...`
         cache.clear()
       }
