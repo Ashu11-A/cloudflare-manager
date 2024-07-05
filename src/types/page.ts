@@ -1,23 +1,41 @@
 import { Page } from '@/class/pages.js'
 
+/**
+ * Existing types of Page
+ *
+ * @export
+ * @enum {number}
+ */
 export enum PageTypes {
     Command = 'Command',
     Option = 'Option',
     SubCommand = 'SubCommand',
 }
 
+/**
+ * Description placeholder
+ *
+ * @type {PageBase}
+ */
 type PageBase = {
     /**
-     * Page name
+     * Page name.
+     * @type {string}
      */
     name: string,
     /**
-     * This will be executed if a request is not completed
-     * @type {Array<Function<Promise<any>>>}
+     * This will be executed if a request is not completed.
+     * @returns {Array<Function<Promise<any>>>}
      */
     loaders?: (() => Promise<any>)[],
 }
 
+/**
+ * @export
+ * @type {PageProps}
+ * @template {PageTypes} PageTyper
+ * @template Req
+ */
 export type PageProps<PageTyper extends PageTypes, Req> = PageBase
     & ({
     /**
@@ -49,4 +67,10 @@ export type PageProps<PageTyper extends PageTypes, Req> = PageBase
         : never
     )
 
+/**
+ * @export
+ * @type {PageStructure}
+ * @template {PageTypes} PageTyper
+ * @template TRequirements
+ */
 export type PageStructure<PageTyper extends PageTypes, TRequirements> = PageProps<PageTyper, TRequirements>
