@@ -1,4 +1,4 @@
-import Options from '@/pages/options.js'
+import Options from '../../src/pages/options.js'
 import { jest } from '@jest/globals'
 
 jest.unstable_mockModule('../../src/index.js', () => ({

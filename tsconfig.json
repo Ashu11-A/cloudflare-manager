@@ -16,7 +16,7 @@
      },
      "declaration": true,
      "resolveJsonModule": true,
-     "outDir": "dist",
+     "outDir": "./dist",
      "removeComments": false,
      "esModuleInterop": true,
      "forceConsistentCasingInFileNames": true,
@@ -24,11 +24,11 @@
      "noImplicitAny": true,
      "noUnusedLocals": true,
      "noUnusedParameters": true,
-     "noImplicitReturns": true
+     "noImplicitReturns": true,
+     "skipLibCheck": true,
   },
   "include":[
      "src",
-     "test"
   ],
   "exclude":[
      "node_modules"

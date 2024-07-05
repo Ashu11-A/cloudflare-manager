@@ -1,4 +1,4 @@
-import Zone from '@/pages/zones.js'
+import Zone from '../../src/pages/zones.js'
 import { jest } from '@jest/globals'
 
 jest.unstable_mockModule('../../src/index.js', () => ({

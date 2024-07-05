@@ -1,4 +1,4 @@
-import DNS from '@/pages/dns.js'
+import DNS from '../../src/pages/dns.js'
 import { jest } from '@jest/globals'
 
 jest.unstable_mockModule('../../src/index.js', () => ({
