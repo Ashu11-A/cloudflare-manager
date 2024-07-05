@@ -2,8 +2,19 @@
   "name": "cloudflare-manager",
   "version": "1.0.0",
   "description": "Gerenciador de fácil uso para cloudflare",
-  "main": "dist/src/app.js",
+  "main": "dist/app.js",
+  "module": "dist/app.js",
   "type": "module",
+  "homepage": "https://github.com/Ashu11-A/cloudflare-manager",
+  "repository": {
+    "url": "https://github.com/Ashu11-A/cloudflare-manager"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/app.js",
+      "types": "./dist/app.d.ts"
+    }
+  },
   "imports": {
     "@/*": [
       "src/*"
@@ -13,12 +24,13 @@
     "node": ">=20"
   },
   "bin": {
-    "cloudflare-manager": "dist/src/app.js",
-    "cfm": "dist/src/app.js",
-    "cm": "dist/src/app.js"
+    "cloudflare-manager": "dist/app.js",
+    "cfm": "dist/app.js",
+    "cm": "dist/app.js"
   },
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
+    "build:2": "rimraf dist && tsup && tsc-alias",
     "dev": "tsx src/app.ts",
     "start": "node --env-file=.env dist/app.js",
     "test": "isTest=True node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
@@ -48,6 +60,7 @@
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
+    "tsup": "^8.1.0",
     "tsx": "^4.16.2",
     "typescript-eslint": "^8.0.0-alpha.39"
   },
