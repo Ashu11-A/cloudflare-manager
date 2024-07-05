@@ -1,7 +1,7 @@
 import { Page } from '@/class/pages.js'
 import { Questions } from '@/class/questions.js'
 import { client, zone } from '@/index.js'
-import { extractTypes } from '@/lib/extractTypes.js'
+import { extractTypes, Properties } from '@/lib/extractTypes.js'
 import { PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 
@@ -61,9 +61,45 @@ new Page({
     /**
      * Converte para o formato utilizado no snippet do enquirer.
      */
-    const variables = properties.map(({ name, description, isOptional }) => {
-      if (['zone_id', 'zone_name', 'type', 'id'].includes(name) || isOptional) return // Remove variaveis opcionais ou desnecessarias
-      return `"${name}": "\${${description}}"`
+    const variables = Object.entries(properties).map(([name, { description, fullTypeName, properties, isOptional }]) => {
+      if ([
+        'zone_id', 'zone_name', 'type', 'id',
+        'ttl', 'tags', 'proxiable', 'modified_on',
+        'meta', 'locked', 'comment', 'created_on',
+        'source', 'auto_added'
+      ].includes(name)) return
+
+      let steps = 1
+
+      const convertProperties = (props: Record<string, Properties>): string => {
+        let result = ''
+    
+        Object.entries(props).forEach(([propName, propDetails]) => {
+          const { description, fullTypeName, properties, isOptional } = propDetails
+          const spaces = '    '.repeat(steps)
+          if (properties) {
+            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"\n`
+            steps++
+            result += convertProperties(properties) // Chamada recursiva para propriedades aninhadas
+          } else {
+            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"\n`
+          }
+          steps = 1
+        })
+    
+        return result
+      }
+
+      let output = ''
+      
+      if (properties) {
+        output = `${name}: {\n`
+        output += convertProperties(properties)
+        output += '}'
+      } else {
+        output = `"${name}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"`
+      }
+      return output
     }) as string[]
 
     const { result } = await new Questions().multipleQuestions({ message: `Opções para criar o Record ${type}`, templates: variables })
