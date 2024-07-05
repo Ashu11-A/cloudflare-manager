@@ -1,4 +1,5 @@
 import { page, zone } from '@/index.js'
+import { linkTables } from '@/lib/linkTables.js'
 import { PageTypes } from '@/types/page.js'
 import 'dotenv/config'
 import enquirer from 'enquirer'
@@ -103,14 +104,53 @@ export class Questions {
       name: 'value',
       type: 'snippet',
       message,
-      required: true,
+      async validate (value) {
+        const result = JSON.parse((value as unknown as { result: string }).result) as Record<string, string | Record<string, string>>
+        const values = (value as unknown as { values: string} ).values as unknown as Record<string, string>
+        const linkedTable = linkTables(values, result)
+
+        let requirements = ''
+
+        for (const [name, value] of Object.entries(linkedTable)) {
+          const variables = name.split('[')[1].split(']')[0]
+          const types = variables.split(',')[0]
+          const isOptional = !!variables.split(',')[1]
+  
+          if (/string/.test(types) && !isOptional && value == 'undefined') requirements += 'Elemento precisa ser expecificado\n'
+  
+          /**
+           * Valida se a infomação é do tipo number.
+           * Isso tenta converte-lo, se não for um numero ele retornará: @type {NaN}.
+           * Se for opcional, e ser especificado, também valide se é um numero.
+           */
+          if (/number/.test(types)) { 
+            if (isOptional && value != 'undefined' && !Number(value)) {
+              requirements += 'Elemento só pode conter números\n'
+            } else if (!isOptional && !Number(value)) {
+              requirements += 'Elemento só pode conter números\n'
+            }
+          }
+  
+          /**
+           * Valida se é "true | false".
+           * Se for opcional, e ser especificado, também valide se é um possivel boolean.
+           */
+          if (/true|false/.test(types)) {
+            if (isOptional && value != 'undefined' && !(/true/.test(value) || /false/.test(value))) {
+              requirements += 'Elemento só pode ser "true" ou "false"\n'
+            } else if (!isOptional && !(/true/.test(value!) || /false/.test(value!))) {
+              requirements += 'Elemento só pode ser "true" ou "false"\n'
+            }
+          }
+        }
+        return requirements.length === 0 ? true : requirements
+      },
       template: `
 {
   ${templates.filter((value) => value !== undefined).join(',\n  ')}
 }
       `
     })
-    console.log(answer)
     return (answer as { value: { values: Record<string, string>, result: string } }).value
   }
 }

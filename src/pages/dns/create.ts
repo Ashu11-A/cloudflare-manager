@@ -45,7 +45,7 @@ new Page({
         
     const record = Object.entries(Types).find(([, typeName]) => typeName === type)?.[0] as unknown as string
     /**
-     * Caso o Record não esteja na lista, então ele é um comando.
+     * Caso o Record não esteja na lista será um comando.
      */
     if (record === undefined) {
       options.reply(type)
@@ -53,7 +53,8 @@ new Page({
     }
 
     /**
-     * Isso pega e converte as tipagens que o cloudflare contem, e deixa de uma forma consumivel.
+     * Isso converte as tipagens do cloudflare.
+     * @returns {Record<string, Properties> | undefined}
      */
     const properties = extractTypes('node_modules/cloudflare/src/resources/dns/records.ts', record)
     if (properties === undefined) throw new Error(`Não foi possivel achar os types de ${record}`)
@@ -73,16 +74,18 @@ new Page({
 
       const convertProperties = (props: Record<string, Properties>): string => {
         let result = ''
-    
+        const all = Object.keys(props).length
+        let actual = 0
         Object.entries(props).forEach(([propName, propDetails]) => {
           const { description, fullTypeName, properties, isOptional } = propDetails
           const spaces = '    '.repeat(steps)
+          actual++
           if (properties) {
-            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"\n`
+            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ', optional' : ''}] ${description.length === 0 ? propName : description}}"${actual < all ? ',' : ''}\n`
             steps++
             result += convertProperties(properties) // Chamada recursiva para propriedades aninhadas
           } else {
-            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"\n`
+            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ', optional' : ''}] ${description.length === 0 ? propName : description}}"${actual < all ? ',' : ''}\n`
           }
           steps = 1
         })
@@ -93,11 +96,11 @@ new Page({
       let output = ''
       
       if (properties) {
-        output = `${name}: {\n`
+        output += `"${name}": {\n`
         output += convertProperties(properties)
         output += '}'
       } else {
-        output = `"${name}": "\${[${fullTypeName}${isOptional ? ' - optional' : ''}]${description.length === 0 ? '' : ` ${description}`}}"`
+        output = `"${name}": "\${[${fullTypeName}${isOptional ? ', optional' : ''}] ${description.length === 0 ? name : description}}"`
       }
       return output
     }) as string[]
