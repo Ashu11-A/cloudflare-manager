@@ -26,7 +26,8 @@ export class Page<PageTyper extends PageTypes, Req = any> {
   }
 
   async reply(action: 'reload' | 'back' | 'exit' | string): Promise<any> {
-    if (process.env.isTest) return this.setResult(action)
+    this.setResult(action)
+    if (process.env.isTest) return
 
     switch (action) {
     case 'reload':
