@@ -22,7 +22,7 @@
      "forceConsistentCasingInFileNames": true,
      "strict": true,
      "noImplicitAny": true,
-     "noUnusedLocals": true,
+     "noUnusedLocals": false,
      "noUnusedParameters": true,
      "noImplicitReturns": true,
      "skipLibCheck": true

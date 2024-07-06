@@ -1,5 +1,4 @@
 import { defineConfig } from 'tsup'
-import { glob } from 'glob'
 
 export default defineConfig({
   format: 'esm',
@@ -9,5 +8,5 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   splitting: false,
   clean: true,
-  // dts: true
+  dts: true
 })

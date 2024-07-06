@@ -30,11 +30,11 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
-    "build:2": "rimraf dist && tsup && tsc-alias",
+    "build:tsup": "rimraf dist && tsup && tsc-alias",
     "dev": "tsx src/app.ts",
     "start": "node --env-file=.env dist/app.js",
     "test": "isTest=True node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "lint": "eslint --fix ./ -c eslint.config.js",
+    "lint": "eslint -c eslint.config.js",
     "check": "npx npm-check-updates"
   },
   "keywords": [
