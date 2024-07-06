@@ -5,7 +5,7 @@ import { extractTypes, Properties } from '@/lib/extractTypes.js'
 import { PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 
-enum Types {
+enum RecordsType {
     ARecord = 'A',
     AAAARecord = 'AAAA',
     CAARecord = 'CAA',
@@ -37,13 +37,12 @@ new Page({
   async run(options) {
     const [zone] = options.interaction.requirements
     const { id } = zone.get()
-    const type = await new Questions().autoComplete<string>({
+    const type = await new Questions({ message: '🎯 Escolha o tipo de Record' }).autoComplete<string>({
       pageName: options.interaction.name,
-      message: '🎯 Escolha o tipo de Record',
-      choices: Object.values(Types).map((type) => ({ value: type, name: type }))
+      choices: Object.values(RecordsType).map((type) => ({ value: type, name: type }))
     })
         
-    const record = Object.entries(Types).find(([, typeName]) => typeName === type)?.[0] as unknown as string
+    const record = Object.entries(RecordsType).find(([, typeName]) => typeName === type)?.[0] as unknown as string
     /**
      * Caso o Record não esteja na lista será um comando.
      */
@@ -105,7 +104,7 @@ new Page({
       return output
     }) as string[]
 
-    const { result } = await new Questions().multipleQuestions({ message: `Opções para criar o Record ${type}`, templates: variables })
+    const { result } = await new Questions({ message: `Opções para criar um Record ${type}` }).multipleQuestions({ templates: variables })
     const json = JSON.parse(result)
 
     await client.dns.records.create(Object.assign(json, { type, path_zone_id: id, zone_id: id}))

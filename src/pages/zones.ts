@@ -12,8 +12,7 @@ export default new Page ({
   requirements: [zones],
   async run(options) {
     const [zones] = options.interaction.requirements
-    const response = await new Questions().select({
-      message: '🚧 Selecione a zona que deseja modificar',
+    const response = await new Questions({ message: '🚧 Selecione a zona que deseja modificar' }).select({
       pageName: options.interaction.name,
       choices: zones.get().map((zone)=> ({
         name: zone.name,

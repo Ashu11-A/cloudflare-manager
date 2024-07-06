@@ -9,8 +9,7 @@ export default new Page({
   type: PageTypes.Option,
   requirements: [zone],
   async run(options) {
-    const response = await new Questions().select({
-      message: '[🌐 DNS] O que deseja fazer?',
+    const response = await new Questions({ message: '[🌐 DNS] O que deseja fazer?' }).select({
       pageName: options.interaction.name,
       choices: [
         {

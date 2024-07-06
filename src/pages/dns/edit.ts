@@ -23,8 +23,7 @@ new Page({
          */
     const sortedRecord = records.get().sort((r1, r2) => r1.type.length - r2.type.length)
 
-    const selectsRecord = await new Questions().select({
-      message: 'Selecione os Records para serem editadas',
+    const selectsRecord = await new Questions({ message: 'Selecione os Records para serem editadas' }).select({
       pageName: options.interaction.name,
       type: 'checkbox',
       choices: sortedRecord.map((record) => {

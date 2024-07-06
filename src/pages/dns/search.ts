@@ -12,19 +12,18 @@ new Page({
   requirements: [records],
   async run(options) {
     /**
-         * Para deixar o console visivelmente mais bonito
-         * Isso deixará o expaçamento uniforme
-         */
+     * Para deixar o console visivelmente mais bonito
+     * Isso deixará o expaçamento uniforme
+     */
     const maxTypeLength = Math.max(...records.get().map((record) => record.type.length))
     const maxNameLength = Math.max(...records.get().map((record) => record.name.length))
 
     /**
-         * Colocar em ordem crescente
-         */
+     * Colocar em ordem crescente
+     */
     const sortedRecord = records.get().sort((r1, r2) => r1.type.length - r2.type.length)
 
-    const selectRecord = await new Questions().select({
-      message: 'Selecione um Record para editar',
+    const selectRecord = await new Questions({ message: 'Selecione um Record para editar' }).select({
       pageName: options.interaction.name,
       choices: sortedRecord.map((record) => {
         const paddedType = `[${record.type}]`.padEnd(maxTypeLength + 2, ' ')
@@ -39,8 +38,7 @@ new Page({
       const recordName = selectRecord.split('_')[1]
       const recordId = selectRecord.split('_')[2]
 
-      const action = await new Questions().select({
-        message: `[🔗 ${recordName}] O que deseja fazer?`,
+      const action = await new Questions({ message: `[🔗 ${recordName}] O que deseja fazer?` }).select({
         pageName: options.interaction.name,
         choices: [
           {

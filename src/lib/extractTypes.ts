@@ -71,6 +71,5 @@ export function extractTypes(fileName: string, typeName: string) {
   }
   
   ts.forEachChild(sourceFile, visit)
-  console.log(result)
   return result
 }

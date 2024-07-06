@@ -9,8 +9,7 @@ export default new Page({
   type: PageTypes.Option,
   previous: 'zones',
   async run(options) {
-    const result = await new Questions().select({
-      message: '📂 Opções disponiveis',
+    const result = await new Questions({ message: '📂 Opções disponiveis' }).select({
       pageName: options.interaction.name,
       choices: [
         {

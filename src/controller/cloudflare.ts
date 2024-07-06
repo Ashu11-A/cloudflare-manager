@@ -1,10 +1,8 @@
-import 'dotenv/config'
-import Cloudflare from 'cloudflare'
-import { readFile, writeFile } from 'fs/promises'
 import { Questions } from '@/class/questions.js'
 import { exists } from '@/lib/exists.js'
-
-const question = new Questions()
+import Cloudflare from 'cloudflare'
+import 'dotenv/config'
+import { readFile, writeFile } from 'fs/promises'
 
 
 export async function checker() {
@@ -13,12 +11,10 @@ export async function checker() {
   let data = await exists('.env') ? await readFile('.env', { encoding: 'utf-8' }) ?? '' : ''
     
   if ([undefined, ''].includes(process.env.CLOUDFLARE_EMAIL)) {
-    console.log('Email do cloudflare está indefinido!')
-    email = await question.ask('Email do Cloudflare')
+    email = await new Questions({ message: 'Email do cloudflare está indefinido!' }).ask('Email do Cloudflare')
   }
   if ([undefined, ''].includes(process.env.CLOUDFLARE_API_KEY)) {
-    console.log('Token do cloudflare está indefinido!')
-    key = await question.ask('Token do Cloudflare')
+    key = await new Questions({ message: 'Token do cloudflare está indefinido!' }).ask('Token do Cloudflare')
   }
 
 

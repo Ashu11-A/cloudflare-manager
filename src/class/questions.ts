@@ -7,7 +7,16 @@ import inquirer, { CheckboxQuestion, ListChoiceOptions, ListQuestion } from 'inq
 import autoComplete from 'inquirer-autocomplete-standalone'
 import { Page } from './pages.js'
 
+interface QuestionsOptions {
+  message: string
+}
 export class Questions {
+  public readonly message
+
+  constructor({ message }: QuestionsOptions) {
+    this.message = message
+  }
+
   async ask (message: string): Promise<string> {
     const result = await inquirer.prompt({
       name: 'value',
@@ -17,8 +26,7 @@ export class Questions {
     return result.value
   }
 
-  async select (options: { message: string, choices: ListChoiceOptions[], type?: ListQuestion['type'] | CheckboxQuestion['type'], pageName: string }): Promise<string> {
-    const { choices, message, pageName, type } = options
+  async select ({ choices, pageName, type }: { choices: ListChoiceOptions[], type?: ListQuestion['type'] | CheckboxQuestion['type'], pageName: string }): Promise<string> {
     if (process.env.isTest) return choices[0].value
 
     const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes>
@@ -51,13 +59,12 @@ export class Questions {
         new inquirer.Separator(),
         ...footerBar,
       ],
-      message: !['zones', null].includes(page.get()) ? `[${zone.get()?.name}] - ${message}` : message
+      message: !['zones', null].includes(page.get()) ? `[${zone.get()?.name}] - ${this.message}` : this.message
     })
     return result.value as string
   }
 
-  async autoComplete<T>(options: { message: string, choices: ListChoiceOptions[], pageName: string }): Promise<T> {
-    const { message, choices, pageName } = options
+  async autoComplete<T>({ choices, pageName }: { choices: ListChoiceOptions[], pageName: string }): Promise<T> {
 
     const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes>
     const footerBar: ListChoiceOptions[] = []
@@ -82,7 +89,7 @@ export class Questions {
     choices.push(...footerBar)
 
     const answer = await autoComplete({
-      message,
+      message: this.message,
       async source(input) {
         const filtered = choices.filter(({ name }) => name?.toLowerCase().includes(input?.toLocaleLowerCase() ?? ''))
         return filtered.map(choice => {
@@ -97,13 +104,12 @@ export class Questions {
     return answer as T
   }
 
-  async multipleQuestions (options: { message: string, templates: string[] }): Promise<{ values: Record<string, string>; result: string }> {
-    const { message, templates } = options
+  async multipleQuestions ({ templates }: { templates: string[] }): Promise<{ values: Record<string, string>; result: string }> {
 
     const answer = await enquirer.prompt({
       name: 'value',
       type: 'snippet',
-      message,
+      message: this.message,
       async validate (value) {
         const result = JSON.parse((value as unknown as { result: string }).result) as Record<string, string | Record<string, string>>
         const values = (value as unknown as { values: string} ).values as unknown as Record<string, string>
