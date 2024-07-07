@@ -36,7 +36,7 @@ new Page({
   requirements: [zone],
   async run(options) {
     const [zone] = options.interaction.requirements
-    const { id } = zone.get()
+    const { id } = zone.getData()
     const type = await new Questions({ message: '🎯 Escolha o tipo de Record' }).autoComplete<string>({
       pageName: options.interaction.name,
       choices: Object.values(RecordsType).map((type) => ({ value: type, name: type }))

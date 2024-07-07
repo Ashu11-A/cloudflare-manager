@@ -14,7 +14,7 @@ export default new Page ({
     const [zones] = options.interaction.requirements
     const response = await new Questions({ message: '🚧 Selecione a zona que deseja modificar' }).select({
       pageName: options.interaction.name,
-      choices: zones.get().map((zone)=> ({
+      choices: zones.getData().map((zone)=> ({
         name: zone.name,
         value: `${zone.name}_${zone.id}`
       } satisfies ListChoiceOptions))

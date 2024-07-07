@@ -9,5 +9,5 @@ if (!(await isGlobal())) {
 }
 
 await Page.register()
-const cachePage = Page.all.find((pagee) => pagee.interaction.name === page.get())
+const cachePage = Page.all.find((pagee) => pagee.interaction.name === page.getData())
 Page.execute(cachePage?.interaction.name ?? 'zones')

@@ -59,7 +59,7 @@ export class Questions {
         new inquirer.Separator(),
         ...footerBar,
       ],
-      message: !['zones', null].includes(page.get()) ? `[${zone.get()?.name}] - ${this.message}` : this.message
+      message: !['zones', null].includes(page.getData()) ? `[${zone.getData()?.name}] - ${this.message}` : this.message
     })
     return result.value as string
   }
