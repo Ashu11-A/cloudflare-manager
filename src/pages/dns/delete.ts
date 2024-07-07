@@ -1,6 +1,7 @@
 import { Page } from '@/class/pages.js'
 import { Questions } from '@/class/questions.js'
-import { client, records, zone } from '@/index.js'
+import { client } from '@/controller/cloudflare.js'
+import { records, zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { ListChoiceOptions } from 'inquirer'
 

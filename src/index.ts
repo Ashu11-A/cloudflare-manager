@@ -1,24 +1,17 @@
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
 import Cache from '@/class/cache.js'
-import cloudflare from '@/controller/cloudflare.js'
-import { Zone } from 'cloudflare/resources/zones/zones.mjs'
 import { Record } from 'cloudflare/resources/dns/records.mjs'
-import Cloudflare from 'cloudflare'
+import { Zone } from 'cloudflare/resources/zones/zones.mjs'
+import { TFunction } from 'i18next'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { Lang } from './controller/lang.js'
 
 /**
  * The directory name of the current module.
  *
  * @type {string}
  */
-export const __dirname: string = dirname(fileURLToPath(import.meta.url))
-
-/**
- * Cloudflare client instance.
- *
- * @type {Cloudflare}
- */
-export const client: Cloudflare = await cloudflare()
+export const rootPath: string = dirname(fileURLToPath(import.meta.url))
 
 /**
  * Cache for pagination data.
@@ -47,3 +40,11 @@ export const zone: Cache<{ name: string, id: string }> = new Cache<{ name: strin
  * @type {Cache<Record[]>}
  */
 export const records: Cache<Record[]> = new Cache<Record[]>('records')
+
+
+/**
+ * Package language controller
+ *
+ * @type {TFunction<'translation'>}
+ */
+export const i18: TFunction<'translation'> = await new Lang().create()

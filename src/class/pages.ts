@@ -1,4 +1,4 @@
-import { __dirname, page } from '@/index.js'
+import { rootPath, page } from '@/index.js'
 import { PageStructure, PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 import 'dotenv/config'
@@ -68,9 +68,9 @@ export class Page<PageTyper extends PageTypes, Req = any> {
   }
 
   static async register() {
-    const pages = await glob('pages/**/*.{ts,js}', { cwd: __dirname, ignore: ['pages/**/*.d.ts'] })
+    const pages = await glob('pages/**/*.{ts,js}', { cwd: rootPath, ignore: ['pages/**/*.d.ts'] })
     for (const page of pages) {
-      await import(join(__dirname, page))
+      await import(join(rootPath, page))
     }
   }
 

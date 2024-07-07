@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
+import { Crypt } from './class/crypt.js'
+import { Lang } from './controller/lang.js'
 import { exists } from './lib/exists.js'
 
 const pkgPath = join(process.cwd(), 'package.json')
@@ -13,5 +15,8 @@ if (!(await exists(pkgPath))) {
     encoding: 'utf-8'
   })
 }
+
+if ((await new Crypt().read(true))?.language === undefined) await new Lang().selectLanguage()
+await new Crypt().checker()
 
 await import('./app.js')

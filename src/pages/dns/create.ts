@@ -1,11 +1,12 @@
 import { Page } from '@/class/pages.js'
 import { Questions } from '@/class/questions.js'
-import { client, zone } from '@/index.js'
+import { zone } from '@/index.js'
 import { extractTypes, Properties } from '@/lib/extractTypes.js'
 import { PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
-import { __dirname } from '@/index.js'
+import { rootPath } from '@/index.js'
 import { join } from 'path'
+import { client } from '@/controller/cloudflare.js'
 
 enum RecordsType {
     ARecord = 'A',
@@ -57,7 +58,7 @@ new Page({
      * Isso converte as tipagens do cloudflare.
      * @returns {Record<string, Properties> | undefined}
      */
-    const pathToCloudflare = join(__dirname, '../', 'node_modules/cloudflare/src/resources/dns/records.ts')
+    const pathToCloudflare = join(rootPath, '..', 'node_modules/cloudflare/src/resources/dns/records.ts')
     const properties = extractTypes(pathToCloudflare, record)
     if (properties === undefined) throw new Error(`Não foi possivel achar os types de ${record}`)
 
