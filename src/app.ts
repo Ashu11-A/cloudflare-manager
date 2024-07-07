@@ -1,7 +1,7 @@
+import c from 'chalk'
 import { Page } from './class/pages.js'
 import { page } from './index.js'
 import { isGlobal } from './lib/isGlobal.js'
-import c from 'chalk'
 
 if (!(await isGlobal())) {
   console.log(`⚠️  ${c.red('Warning')}!`)

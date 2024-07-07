@@ -2,8 +2,8 @@
   "name": "cloudflare-manager",
   "version": "1.0.0",
   "description": "Gerenciador de fácil uso para cloudflare",
-  "main": "dist/app.js",
-  "module": "dist/app.js",
+  "main": "dist/cli.js",
+  "module": "dist/cli.js",
   "type": "module",
   "homepage": "https://github.com/Ashu11-A/cloudflare-manager",
   "repository": {
@@ -11,8 +11,8 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/app.js",
-      "types": "./dist/app.d.ts"
+      "import": "./dist/cli.js",
+      "types": "./dist/cli.d.ts"
     }
   },
   "imports": {
@@ -24,9 +24,9 @@
     "node": ">=20"
   },
   "bin": {
-    "cloudflare-manager": "dist/app.js",
-    "cfm": "dist/app.js",
-    "cm": "dist/app.js"
+    "cloudflare-manager": "dist/cli.js",
+    "cfm": "dist/cli.js",
+    "cm": "dist/cli.js"
   },
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
