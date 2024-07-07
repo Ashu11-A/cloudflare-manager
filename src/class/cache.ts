@@ -1,11 +1,16 @@
+import { rootPath } from '@/index.js'
 import Enmap from 'enmap'
-import { Path } from 'glob'
+import { existsSync, mkdirSync } from 'fs'
+import { join } from 'path'
 
 export default class Cache<Result> extends Enmap<string, string> {
   static all: Enmap<string, string>[] = []
 
   constructor(key: string) {
-    super({ name: key })
+    const dataDir = join(rootPath, '..', 'cache')
+    if (!existsSync(dataDir)) mkdirSync(dataDir)
+
+    super({ name: key, dataDir })
     Cache.all.push(this)
   }
 
