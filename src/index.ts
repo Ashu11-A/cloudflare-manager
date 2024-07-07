@@ -1,10 +1,8 @@
 import Cache from '@/class/cache.js'
 import { Record } from 'cloudflare/resources/dns/records.mjs'
 import { Zone } from 'cloudflare/resources/zones/zones.mjs'
-import { TFunction } from 'i18next'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { Lang } from './controller/lang.js'
 
 /**
  * The directory name of the current module.
@@ -40,11 +38,3 @@ export const zone: Cache<{ name: string, id: string }> = new Cache<{ name: strin
  * @type {Cache<Record[]>}
  */
 export const records: Cache<Record[]> = new Cache<Record[]>('records')
-
-
-/**
- * Package language controller
- *
- * @type {TFunction<'translation'>}
- */
-export const i18: TFunction<'translation'> = await new Lang().create()

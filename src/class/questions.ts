@@ -3,7 +3,7 @@ import { linkTables } from '@/lib/linkTables.js'
 import { PageTypes } from '@/types/page.js'
 import 'dotenv/config'
 import enquirer from 'enquirer'
-import inquirer, { CheckboxQuestion, ListChoiceOptions, ListQuestion } from 'inquirer'
+import inquirer, { Answers, CheckboxQuestion, ListChoiceOptions, ListQuestion, PasswordQuestion } from 'inquirer'
 import autoComplete from 'inquirer-autocomplete-standalone'
 import { Page } from './pages.js'
 
@@ -26,41 +26,62 @@ export class Questions {
     return result.value
   }
 
-  async select ({ choices, pageName, type }: { choices: ListChoiceOptions[], type?: ListQuestion['type'] | CheckboxQuestion['type'], pageName: string }): Promise<string> {
-    if (process.env.isTest) return choices[0].value
+  async select ({ choices, pageName, type, validate }: {
+    choices?: ListChoiceOptions[],
+    type?: ListQuestion['type'] | CheckboxQuestion['type'] | PasswordQuestion['type'],
+    pageName?: string
+    validate?(input: any, answers?: Answers | undefined): boolean | string | Promise<boolean> | Promise<string>
+  }): Promise<string> {
+    if (process.env.isTest) return choices?.[0].value
 
-    const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes>
     const footerBar: ListChoiceOptions[] = []
+    
+    if (pageName !== undefined) {
+      const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes>
 
-    if (pageSelect.interaction.type !== PageTypes.Option) footerBar.push({
-      name: '🔄 Recarregar',
-      value: 'reload'
-    })
-    if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
-      name: '↩️  Voltar',
-      value: 'back'
-    })
-    if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
-      name: '📍 Home',
-      value: 'zones'
-    })
-    footerBar.push({
-      name: '❌ Sair',
-      value: 'exit',
-    })
+      if (pageSelect.interaction.type !== PageTypes.Option) footerBar.push({
+        name: '🔄 Recarregar',
+        value: 'reload'
+      })
+      if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
+        name: '↩️  Voltar',
+        value: 'back'
+      })
+      if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
+        name: '📍 Home',
+        value: 'zones'
+      })
+      footerBar.push({
+        name: '❌ Sair',
+        value: 'exit',
+      })
 
-    const result = await inquirer.prompt({
-      name: 'value',
-      type: type ?? 'list',
-      pageSize: 20,
-      choices: [
-        new inquirer.Separator(),
-        ...choices,
-        new inquirer.Separator(),
-        ...footerBar,
-      ],
-      message: !['zones', null].includes(page.getData()) ? `[${zone.getData()?.name}] - ${this.message}` : this.message
-    })
+    }
+
+    let result
+
+    if (type === 'password') {
+      result = await inquirer.prompt({
+        name: 'value',
+        type,
+        validate
+      })
+
+    } else {
+      result = await inquirer.prompt({
+        name: 'value',
+        type: type ?? 'list',
+        pageSize: 20,
+        choices: [
+          new inquirer.Separator(),
+          ...choices ?? [],
+          new inquirer.Separator(),
+          ...footerBar,
+        ],
+        message: !['zones', null].includes(page.getData()) ? `[${zone.getData()?.name}] - ${this.message}` : this.message
+      })
+    }
+
     return result.value as string
   }
 

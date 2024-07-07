@@ -1,5 +1,5 @@
-import { Lang } from '@/controller/lang.js'
-import { i18, rootPath } from '@/index.js'
+import { i18, Lang } from '@/controller/lang.js'
+import { rootPath } from '@/index.js'
 import { exists } from '@/lib/exists.js'
 import { isJson } from '@/lib/validate.js'
 import { DataCrypted } from '@/types/crypt.js'
@@ -12,7 +12,7 @@ import 'dotenv/config'
 import { readFile, rm, writeFile } from 'fs/promises'
 import forge from 'node-forge'
 import { join } from 'path'
-import prompts from 'prompts'
+import { Questions } from './questions.js'
 
 export const credentials = new Map<string, string | object | boolean | number>()
 
@@ -58,26 +58,22 @@ export class Crypt {
   }
 
   async create () {
-    const select = await prompts({
-      name: 'type',
-      type: 'select',
-      message: i18('crypt.question'),
-      initial: 0,
+    const response = await new Questions({ message: i18('crypt.question') }).select({
       choices: [
         {
-          title: i18('crypt.generate_title'),
-          description: i18('crypt.generate_description'),
+          name: i18('crypt.generate_title'),
+          short: i18('crypt.generate_description'),
           value: 'random'
         },
         {
-          title: i18('crypt.define_title'),
-          description: i18('crypt.define_description'),
+          name: i18('crypt.define_title'),
+          short: i18('crypt.define_description'),
           value: 'defined'
         }
       ]
     })
 
-    switch (select.type) {
+    switch (response) {
     case 'random': {
       const password = randomBytes(256).toString('hex')
       await writeFile(join(rootPath, '..', '.env'), `token=${password}`)
@@ -86,15 +82,14 @@ export class Crypt {
       break
     }
     case 'defined': {
-      const key = await prompts({
-        name: 'value',
+      const key = await new Questions({ message: i18('crypt.your_password') }).select({
         type: 'password',
-        message: i18('crypt.your_password'),
         validate: (value: string) => passwordStrength(value).id < 2 ? i18('crypt.weak_password') : true
       })
-      if (key.value === undefined) throw new Error(i18('error.undefined', { element: 'Password' }))
-      await writeFile(join(rootPath, '..', '.env'), `token=${key.value}`)
-      credentials.set('token', key.value)
+
+      if (key === undefined) throw new Error(i18('error.undefined', { element: 'Password' }))
+      await writeFile(join(rootPath, '..', '.env'), `token=${key}`)
+      credentials.set('token', key)
       await this.write({})
       break
     }
