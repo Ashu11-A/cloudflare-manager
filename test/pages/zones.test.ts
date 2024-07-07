@@ -4,7 +4,7 @@ import { jest } from '@jest/globals'
 jest.unstable_mockModule('../../src/index.js', () => ({
   __esModule: true,
   zones: {
-    get: jest.fn().mockReturnValue([{ name: 'zone1', id: 1 }]),
+    getData: jest.fn().mockReturnValue([{ name: 'zone1', id: 1 }]),
     save: jest.fn(),
   }
 }))

@@ -33,7 +33,7 @@
     "build:tsup": "rimraf dist && tsup && tsc-alias",
     "dev": "tsx src/app.ts",
     "start": "node --env-file=.env dist/app.js",
-    "test": "isTest=True node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "isTest=true node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint -c eslint.config.js",
     "check": "npx npm-check-updates"
   },
