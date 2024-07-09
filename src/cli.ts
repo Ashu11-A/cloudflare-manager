@@ -2,8 +2,14 @@
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
 import { Crypt } from './class/crypt.js'
-import { Lang } from './controller/lang.js'
 import { exists } from './lib/exists.js'
+import { isGlobal } from './lib/isGlobal.js'
+import c from 'chalk'
+
+if (!(await isGlobal())) {
+  console.log(`⚠️  ${c.red('Warning')}!`)
+  console.log(`     It is ${c.bgRed(c.black('not recommended'))} to use this module locally, ${c.bgGreen('install it globally')} with ${c.italic.underline('npm i -g cloudflare-manager')}\n`)
+}
 
 const pkgPath = join(process.cwd(), 'package.json')
 
