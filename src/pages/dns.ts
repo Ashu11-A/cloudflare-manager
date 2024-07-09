@@ -11,7 +11,7 @@ export default new Page({
   requirements: [zone],
   async run(options) {
     const response = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: '[🌐 DNS] O que deseja fazer?',
       pageName: options.interaction.name,
       choices: [

@@ -7,7 +7,6 @@ import flags from 'country-code-to-flag-emoji'
 import { glob } from 'glob'
 import i18next, { TFunction } from 'i18next'
 import Backend, { FsBackendOptions } from 'i18next-fs-backend'
-import { ListChoiceOptions } from 'inquirer'
 import { join } from 'path'
 
 export class Lang {  
@@ -33,11 +32,11 @@ export class Lang {
     for (const lang of allLangs) {
       if (langs.filter((langExist) => langExist === lang).length == 0) langs.push(lang)
     }
-    const choices: ListChoiceOptions[] = langs.map((lang) => ({ name: `${flags(lang)} - ${lang}`, value: lang } satisfies ListChoiceOptions))
+    const choices = langs.map((lang) => ({ name: `${flags(lang)} - ${lang}`, value: lang }))
     const response = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: 'Which language should I continue with?',
-
+      choices
     })()
     if (response === undefined) throw new Error('Please select a language')
       

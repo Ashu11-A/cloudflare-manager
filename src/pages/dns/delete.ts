@@ -4,7 +4,6 @@ import { client } from '@/controller/cloudflare.js'
 import { records, zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
-import { ListChoiceOptions } from 'inquirer'
 
 new Page({
   name: 'dns-delete',
@@ -26,16 +25,16 @@ new Page({
     const sortedRecord = records.getData().sort((r1, r2) => r1.type.length - r2.type.length)
 
     const selectsRecord = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: 'Selecione os Records para serem deletadas',
       pageName: options.interaction.name,
       choices: sortedRecord.map((record) => {
         const paddedType = `[${record.type}]`.padEnd(maxTypeLength + 2, ' ')
         const paddedName = record.name.padEnd(maxNameLength, ' ')
-        return ({
+        return {
           name: `${paddedType} ${paddedName}`,
           value: `record_${record.name}_${record.id}`
-        } satisfies ListChoiceOptions)
+        }
       })
     })()
     console.log(selectsRecord)

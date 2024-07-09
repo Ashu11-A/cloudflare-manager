@@ -4,7 +4,6 @@ import { client } from '@/controller/cloudflare.js'
 import { zone, zones } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
-import { ListChoiceOptions } from 'inquirer'
 
 export default new Page ({
   name: 'zones',
@@ -15,13 +14,13 @@ export default new Page ({
   async run(options) {
     const [zones] = options.interaction.requirements
     const response = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: '🚧 Selecione a zona que deseja modificar',
       pageName: options.interaction.name,
       choices: zones.getData().map((zone)=> ({
         name: zone.name,
         value: `${zone.name}_${zone.id}`
-      } satisfies ListChoiceOptions))
+      }))
     })()
     const zoneSelected = response.split('_')
 

@@ -61,16 +61,16 @@ export class Crypt {
   async create () {
     const response = await question({
       message: i18('crypt.question'),
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       choices: [
         {
           name: i18('crypt.generate_title'),
-          short: i18('crypt.generate_description'),
+          description: i18('crypt.generate_description'),
           value: 'random'
         },
         {
           name: i18('crypt.define_title'),
-          short: i18('crypt.define_description'),
+          description: i18('crypt.define_description'),
           value: 'defined'
         }
       ]

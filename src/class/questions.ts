@@ -2,8 +2,8 @@ import { page, zone } from '@/index.js'
 import { linkTables } from '@/lib/linkTables.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionProps, QuestionTypes } from '@/types/questions.js'
+import { input, password, select, Separator } from '@inquirer/prompts'
 import enquirer from 'enquirer'
-import inquirer, { ListChoiceOptions } from 'inquirer'
 import autoComplete from 'inquirer-autocomplete-standalone'
 import { Page } from './pages.js'
 
@@ -16,11 +16,11 @@ class Question<Result> {
 
   async run() {
     switch (this.options.type) {
-    case QuestionTypes.Input: return (await inquirer.prompt(Object.assign(this.options, { name: 'value' }))).value
-    case QuestionTypes.Password: return (await inquirer.prompt(Object.assign(this.options, { name: 'value' }))).value
-    case QuestionTypes.List: {
+    case QuestionTypes.Input: return await input(this.options)
+    case QuestionTypes.Password: return await password(this.options)
+    case QuestionTypes.Select: {
       const pageName = this.options.pageName
-      const footerBar: ListChoiceOptions[] = []
+      const footerBar = []
       const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes> | undefined
 
       if (pageSelect !== undefined) {
@@ -47,12 +47,11 @@ class Question<Result> {
         ? `[${zoneName}] - ${this.options.message}`
         : this.options.message
 
-      return (await inquirer.prompt(Object.assign(this.options, {
-        name: 'value',
+      return await select(Object.assign(this.options, {
         pageSize: 20,
-        choices: [...this.options.choices as ListChoiceOptions[], new inquirer.Separator(), ...footerBar],
-        message: message
-      }))).value
+        choices: [...this.options.choices, new Separator(), ...footerBar],
+        message
+      }))
     }
     case QuestionTypes.AutoComplete: {
       const pageName = this.options.pageName

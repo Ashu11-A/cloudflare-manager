@@ -11,7 +11,7 @@ export default new Page({
   previous: 'zones',
   async run(options) {
     const result = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: '📂 Opções disponiveis',
       pageName: options.interaction.name,
       choices: [

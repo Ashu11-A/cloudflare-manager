@@ -1,5 +1,5 @@
+import type { input, password, select } from '@inquirer/prompts'
 import Enquirer from 'enquirer'
-import { InputQuestionOptions, ListQuestionOptions, PasswordQuestionOptions } from 'inquirer'
 
 interface BasePromptOptions {
   message: string | (() => string) | (() => Promise<string>)
@@ -25,15 +25,15 @@ export interface SnippetPromptOptions extends BasePromptOptions {
 
 export enum QuestionTypes {
     Input = 'input',
-    List = 'list',
+    Select = 'select',
     Password = 'password',
     AutoComplete = 'autoComplete',
     Snippet = 'snippet'
 }
 
 export type QuestionProps = 
-  | ({ type: QuestionTypes.Input } & InputQuestionOptions)
-  | ({ type: QuestionTypes.List } & ListQuestionOptions & { pageName?: string })
-  | ({ type: QuestionTypes.Password } & PasswordQuestionOptions)
+  | ({ type: QuestionTypes.Input } & Parameters<typeof input>[0])
+  | ({ type: QuestionTypes.Select } & Parameters<typeof select>[0] & { pageName?: string })
+  | ({ type: QuestionTypes.Password } & Parameters<typeof password>[0])
   | ({ type: QuestionTypes.AutoComplete, pageName: string, choices: { name: string, value: string}[], message: string })
   | ({ type: QuestionTypes.Snippet } & SnippetPromptOptions)

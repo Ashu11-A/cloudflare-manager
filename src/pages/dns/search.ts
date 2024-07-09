@@ -4,7 +4,6 @@ import { client } from '@/controller/cloudflare.js'
 import { records, zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
-import { ListChoiceOptions } from 'inquirer'
 
 new Page({
   name: 'dns-search',
@@ -26,16 +25,16 @@ new Page({
     const sortedRecord = records.getData().sort((r1, r2) => r1.type.length - r2.type.length)
 
     const selectRecord = await question({
-      type: QuestionTypes.List,
+      type: QuestionTypes.Select,
       message: 'Selecione um Record para editar',
       pageName: options.interaction.name,
       choices: sortedRecord.map((record) => {
         const paddedType = `[${record.type}]`.padEnd(maxTypeLength + 2, ' ')
         const paddedName = record.name.padEnd(maxNameLength, ' ')
-        return ({
+        return {
           name: `${paddedType} ${paddedName}`,
           value: `record_${record.name}_${record.id}`
-        } satisfies ListChoiceOptions)
+        }
       })
     })()
     if (selectRecord.split('_')[0] === 'record') {
@@ -43,7 +42,7 @@ new Page({
       const recordId = selectRecord.split('_')[2]
 
       const action = await question({
-        type: QuestionTypes.List,
+        type: QuestionTypes.Select,
         message: `[🔗 ${recordName}] O que deseja fazer?`,
         pageName: options.interaction.name,
         choices: [
