@@ -10,7 +10,7 @@ import Cache from './cache.js'
 const spinner = ora()
 
 export class Page<PageTyper extends PageTypes, Req = any, Loader = any> {
-  static all: Page<PageTypes>[] = []
+  static all: Page<PageTypes, any, any>[] = []
   static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
   interaction: PageProps<PageTyper, Req, Loader>
@@ -75,13 +75,14 @@ export class Page<PageTyper extends PageTypes, Req = any, Loader = any> {
   }
 
   static async execute(name: string) {
+    // console.clear()
     const page = this.find(name)
     if (page === undefined) throw new Error('404 | Page not found!')
 
     if (
-      page.interaction.requirements !== undefined &&
-        page.interaction.loaders !== undefined &&
-        page.interaction.requirements.length > 0
+      page.interaction.requirements !== undefined && page.interaction.requirements.length > 0 && 
+      page.interaction.loaders !== undefined && page.interaction.loaders.length > 0
+        
     ) {
       spinner.start()
       for (const cache of page.interaction.requirements) {
