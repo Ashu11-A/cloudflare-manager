@@ -7,7 +7,7 @@ import enquirer from 'enquirer'
 import autoComplete from 'inquirer-autocomplete-standalone'
 import { Page } from './pages.js'
 
-class Question<Result> {
+class Question {
   public readonly options
 
   constructor(options: QuestionProps) {
@@ -93,7 +93,7 @@ class Question<Result> {
         }
       })
 
-      return answer as Result
+      return answer
     }
     case QuestionTypes.Snippet: {
       return (await enquirer.prompt(Object.assign(this.options, {
@@ -146,11 +146,11 @@ class Question<Result> {
         `
       })) as { value: { values: Record<string, string>, result: string } }).value
     }
-    default: return undefined
+    default: return ''
     }
   }
 }
 
-export const question = async (options: QuestionProps): Promise<any> => {
-  return await (new Question(options)).run()
+export async function question<Result = string>(options: QuestionProps): Promise<Result> {
+  return await (new Question(options)).run() as Result
 }

@@ -111,7 +111,7 @@ new Page({
       return output
     }) as string[]
 
-    const { result } = await question({
+    const { result } = await question<{ values: Record<string, string>, result: string }>({
       type: QuestionTypes.Snippet,
       message: `Opções para criar um Record ${type}`,
       templates: variables
