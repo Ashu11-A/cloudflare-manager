@@ -19,6 +19,7 @@ class Question<Result> {
     case QuestionTypes.Input: return await input(this.options)
     case QuestionTypes.Password: return await password(this.options)
     case QuestionTypes.Select: {
+      if (process.env.isTest) return this.options.choices?.[0].type !== 'separator' ? this.options.choices?.[0].value : undefined
       const pageName = this.options.pageName
       const footerBar = []
       const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes> | undefined
@@ -148,8 +149,6 @@ class Question<Result> {
     }
   }
 }
-
-
 
 export const question = (options: QuestionProps): (() => Promise<any>) => {
   const instance = new Question(options)

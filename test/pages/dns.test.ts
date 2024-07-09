@@ -11,12 +11,11 @@ jest.unstable_mockModule('../../src/index.js', () => ({
 
 test('zones page should call zones.save with the selected zone', async () => {
   const { zone } = await import('../../src/index.js')
-  const options = { loaders: [], requirements: [] }
 
+  DNS.interaction.loaders = []
   DNS.interaction.requirements = [zone]
 
-  const option = Object.assign(DNS, options)
-  const result = await option.interaction.run(option)
+  const result = await DNS.interaction.run(DNS)
 
   expect(result.result).toEqual('dns_dynamic')
 })
