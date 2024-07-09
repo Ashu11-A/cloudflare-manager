@@ -16,13 +16,12 @@ export class Lang {
     
     if (!(await exists(path))) {
       console.log(`⛔ The selected language (${lang}) does not exist, using English by default`)
+      await i18next.changeLanguage('en')
       if (change) await crypt.write({ language: 'en' })
-      i18next.changeLanguage('en')
-      return
-    }
-    await i18next.changeLanguage(lang).then(async () => { 
+    } else {
+      await i18next.changeLanguage(lang)
       if (change) await crypt.write({ language: lang })
-    })
+    }
   }
   
   async selectLanguage () {
@@ -39,7 +38,6 @@ export class Lang {
       choices
     })
     if (response === undefined) throw new Error('Please select a language')
-      
     this.setLanguage(response, true)
   }
   /**
@@ -48,7 +46,8 @@ export class Lang {
   async create () {
     return await i18next.use(Backend).init<FsBackendOptions>({
       debug: false,
-      lng: 'en',
+      lng: i18next.language ?? 'en',
+      fallbackLng: i18next.language ?? 'en',
       backend: {
         loadPath: join(rootPath, '..', 'locales', '{{lng}}', '{{ns}}.json'),
       }
@@ -60,6 +59,6 @@ export class Lang {
 /**
  * Package language controller
  *
- * @type {TFunction<'translation'>}
+ * @type {TFunction<'translation', undefined>}
  */
-export const i18: TFunction<'translation'> = await new Lang().create()
+export const i18: TFunction<'translation', undefined> = i18next.isInitialized ? i18next.t : await new Lang().create()
