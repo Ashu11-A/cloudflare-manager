@@ -19,7 +19,7 @@ class Question<Result> {
     case QuestionTypes.Input: return await input(this.options)
     case QuestionTypes.Password: return await password(this.options)
     case QuestionTypes.Select: {
-      if (process.env.isTest) return this.options.choices?.[0].type !== 'separator' ? this.options.choices?.[0].value : undefined
+      if (process.env.isTest) return this.options.choices?.[0].type !== 'separator' ? this.options.choices?.[0].value as string : undefined
       const pageName = this.options.pageName
       const footerBar = []
       const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes> | undefined
@@ -52,7 +52,7 @@ class Question<Result> {
         pageSize: 20,
         choices: [...this.options.choices, new Separator(), ...footerBar],
         message
-      }))
+      })) as string
     }
     case QuestionTypes.AutoComplete: {
       const pageName = this.options.pageName
@@ -146,17 +146,11 @@ class Question<Result> {
         `
       })) as { value: { values: Record<string, string>, result: string } }).value
     }
+    default: return undefined
     }
   }
 }
 
-export const question = (options: QuestionProps): (() => Promise<any>) => {
-  const instance = new Question(options)
-
-  const callable = Object.assign(
-    instance.run.bind(instance),
-    options
-  )
-
-  return callable
+export const question = async (options: QuestionProps): Promise<any> => {
+  return await (new Question(options)).run()
 }

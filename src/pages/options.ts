@@ -40,7 +40,7 @@ export default new Page({
           value: 'network'
         }
       ]
-    })()
+    })
 
     options.reply(result)
     return options

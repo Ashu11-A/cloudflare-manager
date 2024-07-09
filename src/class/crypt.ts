@@ -74,7 +74,7 @@ export class Crypt {
           value: 'defined'
         }
       ]
-    })()
+    })
 
     switch (response) {
     case 'random': {
@@ -89,7 +89,7 @@ export class Crypt {
         message: i18('crypt.your_password'),
         type: QuestionTypes.Password,
         validate: (value: string) => passwordStrength(value).id < 2 ? i18('crypt.weak_password') : true
-      })()
+      })
 
       if (key === undefined) throw new Error(i18('error.undefined', { element: 'Password' }))
       await writeFile(join(rootPath, '..', '.env'), `token=${key}`)

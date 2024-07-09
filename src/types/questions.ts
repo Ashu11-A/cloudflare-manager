@@ -32,8 +32,8 @@ export enum QuestionTypes {
 }
 
 export type QuestionProps = 
-  | ({ type: QuestionTypes.Input } & Parameters<typeof input>[0])
-  | ({ type: QuestionTypes.Select } & Parameters<typeof select>[0] & { pageName?: string })
-  | ({ type: QuestionTypes.Password } & Parameters<typeof password>[0])
-  | ({ type: QuestionTypes.AutoComplete, pageName: string, choices: { name: string, value: string}[], message: string })
-  | ({ type: QuestionTypes.Snippet } & SnippetPromptOptions)
+  | ({ type: QuestionTypes.Input | 'input' } & Parameters<typeof input>[0])
+  | ({ type: QuestionTypes.Select | 'select' } & Parameters<typeof select>[0] & { pageName?: string })
+  | ({ type: QuestionTypes.Password | 'password' } & Parameters<typeof password>[0])
+  | ({ type: QuestionTypes.AutoComplete | 'autoComplete', pageName: string, choices: { name: string, value: string}[], message: string })
+  | ({ type: QuestionTypes.Snippet | 'snippet' } & SnippetPromptOptions)

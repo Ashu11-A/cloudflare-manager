@@ -21,7 +21,7 @@ export default new Page ({
         name: zone.name,
         value: `${zone.name}_${zone.id}`
       }))
-    })()
+    })
     const zoneSelected = response.split('_')
 
     if (zoneSelected.length === 2) {

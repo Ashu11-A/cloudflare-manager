@@ -46,7 +46,7 @@ new Page({
       message: '🎯 Escolha o tipo de Record',
       pageName: options.interaction.name,
       choices: Object.values(RecordsType).map((type) => ({ value: type, name: type }))
-    })()
+    })
         
     const record = Object.entries(RecordsType).find(([, typeName]) => typeName === type)?.[0] as unknown as string
     /**
@@ -115,7 +115,7 @@ new Page({
       type: QuestionTypes.Snippet,
       message: `Opções para criar um Record ${type}`,
       templates: variables
-    })()
+    })
     const json = JSON.parse(result)
 
     await client.dns.records.create(Object.assign(json, { type, path_zone_id: id, zone_id: id}))

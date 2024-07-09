@@ -15,13 +15,13 @@ export async function checker() {
     email = await question({
       type: QuestionTypes.Input,
       message: 'Email do Cloudflare',
-    })()
+    })
   }
   if ([undefined, ''].includes(token)) {
     token = await question({
       type: QuestionTypes.Password,
       message: 'Token do Cloudflare'
-    })()
+    })
   }
 
   await new Crypt().write({ email, token })

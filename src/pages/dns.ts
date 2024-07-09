@@ -36,7 +36,7 @@ export default new Page({
           value: 'dns-search'
         }
       ]
-    })()
+    })
 
     options.reply(response)
     return options

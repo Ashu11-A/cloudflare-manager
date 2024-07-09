@@ -36,7 +36,7 @@ new Page({
           value: `record_${record.name}_${record.id}`
         }
       })
-    })()
+    })
     if (selectRecord.split('_')[0] === 'record') {
       const recordName = selectRecord.split('_')[1]
       const recordId = selectRecord.split('_')[2]
@@ -55,7 +55,7 @@ new Page({
             value: 'dns-delete'
           },
         ]
-      })()
+      })
       return options
     }
     options.reply(selectRecord)

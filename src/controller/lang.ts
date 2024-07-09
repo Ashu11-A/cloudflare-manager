@@ -37,7 +37,7 @@ export class Lang {
       type: QuestionTypes.Select,
       message: 'Which language should I continue with?',
       choices
-    })()
+    })
     if (response === undefined) throw new Error('Please select a language')
       
     this.setLanguage(response, true)

@@ -36,7 +36,7 @@ new Page({
           value: `record_${record.name}_${record.id}`
         }
       })
-    })()
+    })
     console.log(selectsRecord)
     // options.reply(selectRecord)
     return options
