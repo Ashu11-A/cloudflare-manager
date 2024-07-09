@@ -1,33 +1,28 @@
 {
-    "crypt": {
-      "question": "Como deseja proteger suas informações locais?",
-      "generate_title": "Gerar senha aleatória",
-      "generate_description": "Será usada para criptografar suas informações",
-      "define_title": "Definir senha",
-      "define_description": "Será usada para criptografar suas informações",
-      "your_password": "🔐 Sua Senha:",
-      "weak_password": "Senha muito fraca! (1 Letra maiúscula, 1 Letra Minuscula, 1 Numero, 1 Carácter especial)",
-      "file_change": "⚠️  Foi detectado uma mudança em um arquivo protegido!",
-      "delete_file": "🗑️ Deletando arquivos encriptados!",
-      "sensitive_information": "⚠️  Informações sensíveis sendo lidas"
-    },
-    "database": {
-      "starting": "🗂️ Iniciando Banco de dados",
-      "initialized": "✨ Banco de dados inicializado com {{length}} entries",
-      "invalid_entity": "⛔ {{tableName}} Entidade invalida, Entidades carregadas:"
-    },
-    "error": {
-      "unstable": "🔴 {{element}} instável",
-      "no_found": "🚫 Nenhum {{name}} encontrado",
-      "not_exist": "❌ {{name}} não existe!",
-      "not_select": "❌ Nenhuma opção selecionada!",
-      "no_possible": "❌ Não é possivel continuar!",
-      "undefined": "❌ {{element}} indefinido!",
-      "invalid": "❌ {{element}} invalido!",
-      "no_reply": "❌ Formulário não respondido!",
-      "expired": "❌ {{element}} expired!",
-      "disabled": "❌ {{element}} disabled!",
-      "an_error_occurred": "❌ Ocorreu um erro:",
-      "timeout": "⏳ Timeout de {{time}} segundos... tentando após o timeout"
-    }
+  "crypt": {
+    "question": "❓ Como deseja proteger suas informações locais?",
+    "generate_title": "🎲 Gerar senha aleatória",
+    "generate_description": "🔑 Será usada para criptografar suas informações",
+    "define_title": "🔒 Definir senha",
+    "define_description": "🔑 Será usada para criptografar suas informações",
+    "your_password": "🔐 Sua Senha:",
+    "weak_password": "Senha muito fraca! (1 Letra maiúscula, 1 Letra Minuscula, 1 Numero, 1 Carácter especial)",
+    "file_change": "⚠️  Foi detectado uma mudança em um arquivo protegido!",
+    "delete_file": "🗑️ Deletando arquivos encriptados!",
+    "sensitive_information": "⚠️  Informações sensíveis sendo lidas"
+  },
+  "error": {
+    "unstable": "🔴 {{element}} instável",
+    "no_found": "🚫 Nenhum {{name}} encontrado",
+    "not_exist": "❌ {{name}} não existe!",
+    "not_select": "❌ Nenhuma opção selecionada!",
+    "no_possible": "❌ Não é possivel continuar!",
+    "undefined": "❌ {{element}} indefinido!",
+    "invalid": "❌ {{element}} invalido!",
+    "no_reply": "❌ Formulário não respondido!",
+    "expired": "❌ {{element}} expired!",
+    "disabled": "❌ {{element}} disabled!",
+    "an_error_occurred": "❌ Ocorreu um erro:",
+    "timeout": "⏳ Timeout de {{time}} segundos... tentando após o timeout"
+  }
 }

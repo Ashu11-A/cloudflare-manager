@@ -1,40 +1,28 @@
 {
-    "crypt": {
-      "question": "How would you like to protect your local information?",
-      "generate_title": "Generate random password",
-      "generate_description": "It will be used to encrypt your information",
-      "define_title": "Define password",
-      "define_description": "It will be used to encrypt your information",
-      "your_password": "🔐 Your Password:",
-      "weak_password": "Password too weak! (1 Uppercase letter, 1 Lowercase letter, 1 Number, 1 Special character)",
-      "file_change": "⚠️  A change was detected in a protected file!",
-      "delete_file": "🗑️ Deleting encrypted files!",
-      "sensitive_information": "⚠️  Sensitive information being read"
-    },
-    "authenticate": {
-      "registered": "📝 Registered at:",
-      "hello": "👋 Hello {{name}}",
-      "change_token": "🔄 Change Token",
-      "try_again": "🔁 Try Again",
-      "logout": "↪️ Logout"
-    },
-    "database": {
-      "starting": "🗂️ Starting Database",
-      "initialized": "✨ Database initialized with {{length}} entries",
-      "invalid_entity": "⛔ {{tableName}} Invalid entity, loaded entities:"
-    },
-    "error": {
-      "unstable": "🔴 {{element}} unstable",
-      "no_found": "🚫 No {{name}} found",
-      "not_exist": "❌ {{name}} does not exist!",
-      "not_select": "❌ No option selected!",
-      "no_possible": "❌ It is not possible to continue!",
-      "undefined": "❌ {{element}} undefined!",
-      "invalid": "❌ {{element}} invalid!",
-      "no_reply": "❌ Form not replied!",
-      "expired": "❌ {{element}} expired!",
-      "disabled": "❌ {{element}} disabled!",
-      "an_error_occurred": "❌ An error occurred:",
-      "timeout": "⏳ Timeout of {{time}} seconds... trying after the timeout"
-    }
+  "crypt": {
+    "question": "❓ How would you like to protect your local information?",
+    "generate_title": "🎲 Generate random password",
+    "generate_description": "🔑 It will be used to encrypt your information",
+    "define_title": "🔒 Define password",
+    "define_description": "🔑 It will be used to encrypt your information",
+    "your_password": "🔐 Your Password:",
+    "weak_password": "🔒 Password too weak! (1 Uppercase letter, 1 Lowercase letter, 1 Number, 1 Special character)",
+    "file_change": "⚠️  A change was detected in a protected file!",
+    "delete_file": "🗑️ Deleting encrypted files!",
+    "sensitive_information": "⚠️  Sensitive information being read"
+  },
+  "error": {
+    "unstable": "🔴 {{element}} unstable",
+    "no_found": "🚫 No {{name}} found",
+    "not_exist": "❌ {{name}} does not exist!",
+    "not_select": "❌ No option selected!",
+    "no_possible": "❌ It is not possible to continue!",
+    "undefined": "❌ {{element}} undefined!",
+    "invalid": "❌ {{element}} invalid!",
+    "no_reply": "❌ Form not replied!",
+    "expired": "❌ {{element}} expired!",
+    "disabled": "❌ {{element}} disabled!",
+    "an_error_occurred": "❌ An error occurred:",
+    "timeout": "⏳ Timeout of {{time}} seconds... trying after the timeout"
   }
+}
