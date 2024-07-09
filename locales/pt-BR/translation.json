@@ -24,5 +24,27 @@
     "disabled": "❌ {{element}} disabled!",
     "an_error_occurred": "❌ Ocorreu um erro:",
     "timeout": "⏳ Timeout de {{time}} segundos... tentando após o timeout"
+  },
+  "pages": {
+    "zones": {
+      "question": "🚧 Selecione a zona que deseja modificar"
+    },
+    "options": {
+      "question": "📂 Opções disponíveis",
+      "analytics": "📊 Analytics",
+      "dns": "🌐 DNS",
+      "ssl/tls": "🔒 SSL/TLS",
+      "security": "🛡️  Segurança",
+      "caching": "📥 Cache",
+      "network": "📡 Rede"
+    },
+    "dns": {
+      "question": "[🌐 DNS] O que deseja fazer?",
+      "dynamic": "✨ Ip Dynamic",
+      "create": "💡 Criar",
+      "edit": "✏️  Editar",
+      "delete": "🗑️  Apagar",
+      "search": "🔎 Pesquisar"
+    }
   }
 }

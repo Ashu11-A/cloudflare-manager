@@ -1,6 +1,7 @@
 import { Page } from '@/class/pages.js'
 import { question } from '@/class/questions.js'
 import { client } from '@/controller/cloudflare.js'
+import { i18 } from '@/controller/lang.js'
 import { zone, zones } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
@@ -15,7 +16,7 @@ export default new Page({
     const [zones] = options.interaction.requirements
     const response = await question({
       type: QuestionTypes.Select,
-      message: '🚧 Selecione a zona que deseja modificar',
+      message: i18('pages.zones.question'),
       pageName: options.interaction.name,
       choices: zones.getData().map((zone)=> ({
         name: zone.name,

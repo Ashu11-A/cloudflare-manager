@@ -1,5 +1,6 @@
 import { Page } from '@/class/pages.js'
 import { question } from '@/class/questions.js'
+import { i18 } from '@/controller/lang.js'
 import { zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
@@ -13,33 +14,33 @@ export default new Page({
   async run(options) {
     const result = await question({
       type: QuestionTypes.Select,
-      message: '📂 Opções disponiveis',
+      message: i18('pages.options.question'),
       pageName: options.interaction.name,
       choices: [
         {
-          name: '📊 Analytics',
+          name: i18('pages.options.analytics'),
           value: 'analytics'
         },
         {
-          name: '🌐 DNS',
+          name: i18('pages.options.dns'),
           value: 'dns'
         },
         {
-          name: '🔒 SSL/TLS',
+          name: i18('pages.options.ssl/tls'),
           value: 'ssl/tls'
         },
         {
-          name: '🛡️  Security',
+          name: i18('pages.options.security'),
           value: 'security'
         },
         {
-          name: '📥 Caching',
+          name: i18('pages.options.caching'),
           value: 'caching'
         },
         {
-          name: '📡 Network',
+          name: i18('pages.options.network'),
           value: 'network'
-        }
+        },
       ]
     })
 
