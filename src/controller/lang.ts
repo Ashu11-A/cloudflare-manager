@@ -1,7 +1,8 @@
 import { Crypt } from '@/class/crypt.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { rootPath } from '@/index.js'
 import { exists } from '@/lib/exists.js'
+import { QuestionTypes } from '@/types/questions.js'
 import flags from 'country-code-to-flag-emoji'
 import { glob } from 'glob'
 import i18next, { TFunction } from 'i18next'
@@ -33,7 +34,11 @@ export class Lang {
       if (langs.filter((langExist) => langExist === lang).length == 0) langs.push(lang)
     }
     const choices: ListChoiceOptions[] = langs.map((lang) => ({ name: `${flags(lang)} - ${lang}`, value: lang } satisfies ListChoiceOptions))
-    const response = await new Questions({ message: 'Which language should I continue with?' }).select({ choices })
+    const response = await question({
+      type: QuestionTypes.List,
+      message: 'Which language should I continue with?',
+
+    })()
     if (response === undefined) throw new Error('Please select a language')
       
     this.setLanguage(response, true)

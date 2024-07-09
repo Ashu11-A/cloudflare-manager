@@ -1,5 +1,5 @@
 import { Page } from '@/class/pages.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { zone } from '@/index.js'
 import { extractTypes, Properties } from '@/lib/extractTypes.js'
 import { PageTypes } from '@/types/page.js'
@@ -7,6 +7,7 @@ import chalk from 'chalk'
 import { rootPath } from '@/index.js'
 import { join } from 'path'
 import { client } from '@/controller/cloudflare.js'
+import { QuestionTypes } from '@/types/questions.js'
 
 enum RecordsType {
     ARecord = 'A',
@@ -40,10 +41,12 @@ new Page({
   async run(options) {
     const [zone] = options.interaction.requirements
     const { id } = zone.getData()
-    const type = await new Questions({ message: '🎯 Escolha o tipo de Record' }).autoComplete<string>({
+    const type = await question({
+      type: QuestionTypes.AutoComplete,
+      message: '🎯 Escolha o tipo de Record',
       pageName: options.interaction.name,
       choices: Object.values(RecordsType).map((type) => ({ value: type, name: type }))
-    })
+    })()
         
     const record = Object.entries(RecordsType).find(([, typeName]) => typeName === type)?.[0] as unknown as string
     /**
@@ -108,7 +111,11 @@ new Page({
       return output
     }) as string[]
 
-    const { result } = await new Questions({ message: `Opções para criar um Record ${type}` }).multipleQuestions({ templates: variables })
+    const { result } = await question({
+      type: QuestionTypes.Snippet,
+      message: `Opções para criar um Record ${type}`,
+      templates: variables
+    })()
     const json = JSON.parse(result)
 
     await client.dns.records.create(Object.assign(json, { type, path_zone_id: id, zone_id: id}))

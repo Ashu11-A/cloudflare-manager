@@ -1,7 +1,8 @@
 import { Page } from '@/class/pages.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
+import { QuestionTypes } from '@/types/questions.js'
 
 export default new Page({
   name: 'dns',
@@ -9,7 +10,9 @@ export default new Page({
   type: PageTypes.Option,
   requirements: [zone],
   async run(options) {
-    const response = await new Questions({ message: '[🌐 DNS] O que deseja fazer?' }).select({
+    const response = await question({
+      type: QuestionTypes.List,
+      message: '[🌐 DNS] O que deseja fazer?',
       pageName: options.interaction.name,
       choices: [
         {
@@ -33,7 +36,7 @@ export default new Page({
           value: 'dns-search'
         }
       ]
-    })
+    })()
 
     options.reply(response)
     return options

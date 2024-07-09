@@ -1,8 +1,9 @@
 import { Page } from '@/class/pages.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { client } from '@/controller/cloudflare.js'
 import { records, zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
+import { QuestionTypes } from '@/types/questions.js'
 import { ListChoiceOptions } from 'inquirer'
 
 new Page({
@@ -24,7 +25,9 @@ new Page({
      */
     const sortedRecord = records.getData().sort((r1, r2) => r1.type.length - r2.type.length)
 
-    const selectRecord = await new Questions({ message: 'Selecione um Record para editar' }).select({
+    const selectRecord = await question({
+      type: QuestionTypes.List,
+      message: 'Selecione um Record para editar',
       pageName: options.interaction.name,
       choices: sortedRecord.map((record) => {
         const paddedType = `[${record.type}]`.padEnd(maxTypeLength + 2, ' ')
@@ -34,12 +37,14 @@ new Page({
           value: `record_${record.name}_${record.id}`
         } satisfies ListChoiceOptions)
       })
-    })
+    })()
     if (selectRecord.split('_')[0] === 'record') {
       const recordName = selectRecord.split('_')[1]
       const recordId = selectRecord.split('_')[2]
 
-      const action = await new Questions({ message: `[🔗 ${recordName}] O que deseja fazer?` }).select({
+      const action = await question({
+        type: QuestionTypes.List,
+        message: `[🔗 ${recordName}] O que deseja fazer?`,
         pageName: options.interaction.name,
         choices: [
           {
@@ -51,7 +56,7 @@ new Page({
             value: 'dns-delete'
           },
         ]
-      })
+      })()
       return options
     }
     options.reply(selectRecord)

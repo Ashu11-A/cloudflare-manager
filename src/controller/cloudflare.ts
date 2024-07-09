@@ -1,5 +1,6 @@
 import { credentials, Crypt } from '@/class/crypt.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
+import { QuestionTypes } from '@/types/questions.js'
 import Cloudflare from 'cloudflare'
 import 'dotenv/config'
 
@@ -11,10 +12,17 @@ export async function checker() {
   let token = data?.token
 
   if ([undefined, ''].includes(email)) {
-    email = await new Questions({ message: 'Email do cloudflare está indefinido!' }).ask('Email do Cloudflare')
+    email = await question({
+      type: QuestionTypes.Input,
+      message: 'Email do Cloudflare',
+      
+    })()
   }
   if ([undefined, ''].includes(token)) {
-    token = await new Questions({ message: 'Token do cloudflare está indefinido!' }).ask('Token do Cloudflare')
+    token = await question({
+      type: QuestionTypes.Input,
+      message: 'Token do Cloudflare'
+    })()
   }
 
   await new Crypt().write({ email, token })

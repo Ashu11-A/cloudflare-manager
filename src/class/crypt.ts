@@ -12,7 +12,8 @@ import 'dotenv/config'
 import { readFile, rm, writeFile } from 'fs/promises'
 import forge from 'node-forge'
 import { join } from 'path'
-import { Questions } from './questions.js'
+import { question } from './questions.js'
+import { QuestionTypes } from '@/types/questions.js'
 
 export const credentials = new Map<string, string | object | boolean | number>()
 
@@ -58,7 +59,9 @@ export class Crypt {
   }
 
   async create () {
-    const response = await new Questions({ message: i18('crypt.question') }).select({
+    const response = await question({
+      message: i18('crypt.question'),
+      type: QuestionTypes.List,
       choices: [
         {
           name: i18('crypt.generate_title'),
@@ -71,7 +74,7 @@ export class Crypt {
           value: 'defined'
         }
       ]
-    })
+    })()
 
     switch (response) {
     case 'random': {
@@ -82,10 +85,11 @@ export class Crypt {
       break
     }
     case 'defined': {
-      const key = await new Questions({ message: i18('crypt.your_password') }).select({
-        type: 'password',
+      const key = await question({
+        message: i18('crypt.your_password'),
+        type: QuestionTypes.Password,
         validate: (value: string) => passwordStrength(value).id < 2 ? i18('crypt.weak_password') : true
-      })
+      })()
 
       if (key === undefined) throw new Error(i18('error.undefined', { element: 'Password' }))
       await writeFile(join(rootPath, '..', '.env'), `token=${key}`)

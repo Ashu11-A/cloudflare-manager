@@ -1,8 +1,9 @@
 import { Page } from '@/class/pages.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { client } from '@/controller/cloudflare.js'
 import { records, zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
+import { QuestionTypes } from '@/types/questions.js'
 import { ListChoiceOptions } from 'inquirer'
 
 new Page({
@@ -24,9 +25,10 @@ new Page({
          */
     const sortedRecord = records.getData().sort((r1, r2) => r1.type.length - r2.type.length)
 
-    const selectsRecord = await new Questions({ message: 'Selecione os Records para serem deletadas' }).select({
+    const selectsRecord = await question({
+      type: QuestionTypes.List,
+      message: 'Selecione os Records para serem deletadas',
       pageName: options.interaction.name,
-      type: 'checkbox',
       choices: sortedRecord.map((record) => {
         const paddedType = `[${record.type}]`.padEnd(maxTypeLength + 2, ' ')
         const paddedName = record.name.padEnd(maxNameLength, ' ')
@@ -35,7 +37,7 @@ new Page({
           value: `record_${record.name}_${record.id}`
         } satisfies ListChoiceOptions)
       })
-    })
+    })()
     console.log(selectsRecord)
     // options.reply(selectRecord)
     return options

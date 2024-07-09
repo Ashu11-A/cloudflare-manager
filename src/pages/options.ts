@@ -1,7 +1,8 @@
 import { Page } from '@/class/pages.js'
-import { Questions } from '@/class/questions.js'
+import { question } from '@/class/questions.js'
 import { zone } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
+import { QuestionTypes } from '@/types/questions.js'
 
 export default new Page({
   name: 'options',
@@ -9,7 +10,9 @@ export default new Page({
   type: PageTypes.Option,
   previous: 'zones',
   async run(options) {
-    const result = await new Questions({ message: '📂 Opções disponiveis' }).select({
+    const result = await question({
+      type: QuestionTypes.List,
+      message: '📂 Opções disponiveis',
       pageName: options.interaction.name,
       choices: [
         {
@@ -37,7 +40,7 @@ export default new Page({
           value: 'network'
         }
       ]
-    })
+    })()
 
     options.reply(result)
     return options
