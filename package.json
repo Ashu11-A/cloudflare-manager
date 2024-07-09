@@ -31,7 +31,7 @@
   "scripts": {
     "build": "rimraf dist && tsc && tsc-alias",
     "build:tsup": "rimraf dist && tsup && tsc-alias",
-    "dev": "tsx src/app.ts",
+    "dev": "tsx src/cli.ts",
     "start": "node --env-file=.env dist/app.js",
     "test": "isTest=true node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint -c eslint.config.js",
