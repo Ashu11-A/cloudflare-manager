@@ -31,6 +31,7 @@ export class Crypt {
         await this.validate()
       })
     }
+    return this
   }
 
   async genKeys () {
@@ -125,7 +126,6 @@ export class Crypt {
   async delete () {
     if (await exists(join(rootPath, '..', '.key'))) await rm(join(rootPath, '..', '.key'))
     if (await exists(join(rootPath, '..', '.hash'))) await rm(join(rootPath, '..', '.hash'))
-    if (await exists(join(rootPath, '..', '.env'))) await rm(join(rootPath, '..', '.env'))
   }
 
   async read (ephemeral?: boolean): Promise<DataCrypted | undefined> {

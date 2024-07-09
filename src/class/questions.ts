@@ -35,7 +35,7 @@ class Question {
         })
         if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
           name: '📍 Home',
-          value: 'zones'
+          value: 'home'
         })
       }
       footerBar.push({
@@ -44,7 +44,7 @@ class Question {
       })
 
       const zoneName = zone.getData()?.name
-      const message = zoneName !== undefined && this.options.message !== undefined && !['zones', null].includes(page.getData())
+      const message = zoneName !== undefined && this.options.message !== undefined && !['zones', 'home', null].includes(page.getData())
         ? `[${zoneName}] - ${this.options.message}`
         : this.options.message
 
@@ -72,7 +72,7 @@ class Question {
         })
         if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
           name: '📍 Home',
-          value: 'zones'
+          value: 'home'
         })
       }
       footerBar.push({

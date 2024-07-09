@@ -26,6 +26,15 @@
     "timeout": "⏳ Timeout of {{time}} seconds... trying after the timeout"
   },
   "pages": {
+    "home": {
+      "question": "🏚️  Home page",
+      "zones": "🗺️  Zones",
+      "language": "🌍 Language",
+      "settings": "⚙️  Settings",
+      "about": "🔎 About",
+      "login": "🔐 Login",
+      "logout": "👋 Log out"
+    },
     "zones": {
       "question": "🚧 Select the zone you want to modify"
     },

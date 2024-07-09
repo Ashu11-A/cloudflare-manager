@@ -22,7 +22,6 @@ if (!(await exists(pkgPath))) {
   })
 }
 
-if ((await new Crypt().read(true))?.language === undefined) await new Lang().selectLanguage()
-await new Crypt().checker()
+await (await new Crypt().checker()).read()
 
 await import('./app.js')

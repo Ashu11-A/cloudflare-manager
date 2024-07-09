@@ -8,7 +8,8 @@ import { QuestionTypes } from '@/types/questions.js'
 
 export default new Page({
   name: 'zones',
-  type: PageTypes.Command,
+  type: PageTypes.SubCommand,
+  previous: 'home',
   next: 'options',
   loaders: [async () => zones.save((await client.zones.list({ per_page: 100 })).result)],
   requirements: [zones],
