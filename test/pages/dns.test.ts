@@ -17,5 +17,5 @@ test('zones page should call zones.save with the selected zone', async () => {
 
   const result = await DNS.interaction.run(DNS)
 
-  expect(result.result).toEqual('dns_dynamic')
+  expect(result.result).toEqual('dns-dynamic')
 })
