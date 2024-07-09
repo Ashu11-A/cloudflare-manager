@@ -5,7 +5,7 @@ import { zone, zones } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { QuestionTypes } from '@/types/questions.js'
 
-export default new Page ({
+export default new Page({
   name: 'zones',
   type: PageTypes.Command,
   next: 'options',
@@ -26,7 +26,7 @@ export default new Page ({
 
     if (zoneSelected.length === 2) {
       zone.save({ name: zoneSelected[0], id: zoneSelected[1] })
-      options.reply(options.interaction.next)
+      options.reply(options.interaction.next as string)
     } else {
       options.reply(response)
     }

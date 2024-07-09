@@ -6,6 +6,7 @@ import { QuestionTypes } from '@/types/questions.js'
 
 export default new Page({
   name: 'options',
+  loaders: [],
   requirements: [zone],
   type: PageTypes.Option,
   previous: 'zones',

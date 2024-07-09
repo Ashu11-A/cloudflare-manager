@@ -8,6 +8,7 @@ export default new Page({
   name: 'dns',
   previous: 'options',
   type: PageTypes.Option,
+  loaders: [],
   requirements: [zone],
   async run(options) {
     const response = await question({

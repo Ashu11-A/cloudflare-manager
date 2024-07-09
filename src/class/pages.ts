@@ -1,5 +1,5 @@
 import { rootPath, page } from '@/index.js'
-import { PageStructure, PageTypes } from '@/types/page.js'
+import { PageProps, PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 import 'dotenv/config'
 import { glob } from 'glob'
@@ -9,14 +9,14 @@ import Cache from './cache.js'
 
 const spinner = ora()
 
-export class Page<PageTyper extends PageTypes, Req = any> {
+export class Page<PageTyper extends PageTypes, Req = any, Loader = any> {
   static all: Page<PageTypes>[] = []
   static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
-  interaction: PageStructure<PageTyper, Req>
+  interaction: PageProps<PageTyper, Req, Loader>
   result?: string
 
-  constructor(options: PageStructure<PageTyper, Req>) {
+  constructor(options: PageProps<PageTyper, Req, Loader>) {
     this.interaction = options
     Page.all.push(this)
   }
@@ -44,7 +44,7 @@ export class Page<PageTyper extends PageTypes, Req = any> {
       spinner.stop()
 
       spinner.start('Carregando novos dados...')
-      for (const [index, fn] of Object.entries(this.interaction.loaders)) {
+      for (const [index, fn] of Object.entries(this.interaction.loaders) as unknown as [string, (() => Promise<any>)][]) {
         spinner.text = `Carregando loaders ${chalk.green(Number(index) + 1)}`
         await fn()
       }
@@ -54,8 +54,8 @@ export class Page<PageTyper extends PageTypes, Req = any> {
       break
     case 'back':
       if (this.interaction.type !== PageTypes.Command) {
-        page.save(this.interaction.previous)
-        Page.execute(this.interaction.previous)
+        page.save(this.interaction.previous as string)
+        Page.execute(this.interaction.previous as string)
       }
       break
     case 'exit':
