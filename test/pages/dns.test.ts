@@ -9,7 +9,7 @@ jest.unstable_mockModule('../../src/index.js', () => ({
   }
 }))
 
-test('zones page should call zones.save with the selected zone', async () => {
+test('It should return the first element of the question', async () => {
   const { zone } = await import('../../src/index.js')
 
   DNS.interaction.loaders = []

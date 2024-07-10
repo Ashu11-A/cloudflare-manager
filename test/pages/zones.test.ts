@@ -1,21 +1,30 @@
-import Zone from '../../src/pages/zones.js'
 import { jest } from '@jest/globals'
+import Zones from '@/pages/zones.js'
 
-jest.unstable_mockModule('../../src/index.js', () => ({
-  __esModule: true,
-  zones: {
-    getData: jest.fn().mockReturnValue([{ name: 'zone1', id: 1 }]),
-    save: jest.fn(),
+jest.unstable_mockModule('@/index.js', () => {
+  return {
+    __esModule: true,
+    zones: {
+      save: jest.fn(),
+      getData: jest.fn().mockReturnValue([
+        { name: 'zone1', id: '1' },
+        { name: 'zone2', id: '2' },
+      ]),
+      zone:  {
+        save: jest.fn(),
+      }
+    }
   }
-}))
+})
 
-test('zones page should call zones.save with the selected zone', async () => {
-  const { zones } = await import('../../src/index.js')
+describe('zones Page', () => {
+  it('It should return the first element of the question', async () => {
+    const { zones } = await import('@/index.js')
 
-  Zone.interaction.loaders = []
-  Zone.interaction.requirements = [zones]
+    Zones.interaction.requirements = [zones]
 
-  const result = await Zone.interaction.run(Zone)
+    const { result } = await Zones.interaction.run(Zones)
 
-  expect(result.result).toEqual('options')
+    expect(result).toBe('options')
+  })
 })

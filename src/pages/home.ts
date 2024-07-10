@@ -5,7 +5,7 @@ import { i18 } from '@/controller/lang.js'
 import { PageTypes } from '@/types/page.js'
 import { Separator } from '@inquirer/prompts'
 
-new Page({
+export default new Page({
   name: 'home',
   loaders: [],
   requirements: [credentials],

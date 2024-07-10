@@ -19,7 +19,13 @@ class Question {
     case QuestionTypes.Input: return await input(this.options)
     case QuestionTypes.Password: return await password(this.options)
     case QuestionTypes.Select: {
-      if (process.env.isTest) return this.options.choices?.[0].type !== 'separator' ? this.options.choices?.[0].value as string : undefined
+      if (process.env.isTest) {
+        let choiceData
+        for (const choice of this.options.choices) {
+          if (choice.type !== 'separator') { choiceData = choice; break }
+        }
+        return choiceData?.value
+      }
       const pageName = this.options.pageName
       const footerBar = []
       const pageSelect = Page.all.find((page) => page.interaction.name === pageName) as Page<PageTypes> | undefined

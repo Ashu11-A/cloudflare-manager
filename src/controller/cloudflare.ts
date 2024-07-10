@@ -1,7 +1,6 @@
 import Cloudflare from 'cloudflare'
 import 'dotenv/config'
 
-
 const createClient = async () => {
   (await import('dotenv')).config({ override: true })
   return new Cloudflare({
