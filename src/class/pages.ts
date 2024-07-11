@@ -1,7 +1,6 @@
 import { page, rootPath } from '@/index.js'
 import { PageProps, PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
-import 'dotenv/config'
 import { glob } from 'glob'
 import ora from 'ora'
 import { join } from 'path'

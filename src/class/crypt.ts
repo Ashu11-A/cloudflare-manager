@@ -8,7 +8,6 @@ import { passwordStrength } from 'check-password-strength'
 import { watch } from 'chokidar'
 import { randomBytes } from 'crypto'
 import CryptoJS from 'crypto-js'
-import 'dotenv/config'
 import { readFile, rm, writeFile } from 'fs/promises'
 import forge from 'node-forge'
 import { join } from 'path'
@@ -19,7 +18,7 @@ export const credentials = new Map<string, string | object | boolean | number>()
 
 export class Crypt {
   async checker () {
-    if (!(await exists(join(rootPath, '..', '.env'))) && process.env?.token === undefined) await this.create()
+    if (!(await exists(join(rootPath, '..', '.env'))) && await this.getToken() === undefined) await this.create()
     if (!(await exists(join(rootPath, '..', 'privateKey.pem'))) || !(await exists(join(rootPath, '..', 'publicKey.pem')))) await this.genKeys()
 
     for (const path of ['.key', '.hash']) {
@@ -102,8 +101,8 @@ export class Crypt {
     }
   }
 
-  getToken (): string | undefined {
-    let token = process.env.token
+  async getToken  (): Promise<string | undefined> {
+    let token = (await readFile(join(rootPath, '..', '.env'), { encoding: 'utf-8' })).split('=')[1]
 
     if (token === undefined) token = credentials.get('token') as string
 
@@ -129,7 +128,7 @@ export class Crypt {
   }
 
   async read (ephemeral?: boolean): Promise<DataCrypted | undefined> {
-    const token = this.getToken()
+    const token = await this.getToken()
     if (token === undefined) return
     const existKey = await exists(join(rootPath, '..', '.key'))
     if (!existKey) return undefined
@@ -162,7 +161,7 @@ export class Crypt {
   async write (value: Record<string, string> | string | object) {
     if (!isJson(value)) throw new Error(i18('error.invalid', { element: '.key' }))
 
-    const token = this.getToken()
+    const token = await this.getToken()
     if (token === undefined) return
   
     const data = Object.assign(await this.read(true) ?? {}, value)
