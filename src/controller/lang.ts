@@ -45,9 +45,10 @@ export class Lang {
   */
   async create () {
     return await i18next.use(Backend).init<FsBackendOptions>({
-      debug: false,
+      debug: true,
+      initImmediate: false,
       lng: i18next.language ?? 'en',
-      fallbackLng: i18next.language ?? 'en',
+      fallbackLng: 'en',
       backend: {
         loadPath: join(rootPath, '..', 'locales', '{{lng}}', '{{ns}}.json'),
       }

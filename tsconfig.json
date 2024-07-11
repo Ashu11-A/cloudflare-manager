@@ -6,7 +6,7 @@
         "DOM"
      ],
      "module":"NodeNext",
-     "rootDir":"./src",
+     "rootDir":".",
      "moduleResolution":"NodeNext",
      "baseUrl":".",
      "paths":{
@@ -27,11 +27,6 @@
      "noImplicitReturns": true,
      "skipLibCheck": true
   },
-  "include":[
-     "src",
-     "test"
-  ],
-  "exclude":[
-     "node_modules"
-  ]
+  "include":["src", "test"],
+  "exclude":["node_modules"]
 }

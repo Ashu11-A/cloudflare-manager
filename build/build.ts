@@ -1,8 +1,9 @@
-import { defineConfig } from 'tsup'
+import { build } from 'tsup'
 
-export default defineConfig({
+await build({
   format: 'esm',
   entry: ['src/**/*.ts'],
+  tsconfig: './tsconfig.build.json',
   bundle: false,
   platform: 'node',
   skipNodeModulesBundle: true,

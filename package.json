@@ -29,8 +29,8 @@
     "cm": "dist/cli.js"
   },
   "scripts": {
-    "build": "rimraf dist && tsc && tsc-alias",
-    "build:tsup": "rimraf dist && tsup && tsc-alias",
+    "build": "rimraf dist && tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
+    "build:tsup": "rimraf dist && npx tsx build/build.ts && tsc-alias -p ./tsconfig.build.json",
     "translate": " npx tsx build/translate.ts",
     "dev": "tsx src/cli.ts",
     "start": "node --env-file=.env dist/app.js",
