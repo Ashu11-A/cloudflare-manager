@@ -1,0 +1,674 @@
+{
+  "ARecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Um endereço IPv4 válido.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Se o registro está recebendo os benefícios de desempenho e segurança da\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "AAAARecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Um endereço IPv6 válido.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Se o registro está recebendo os benefícios de desempenho e segurança da\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "CAARecord": {
+    "data": {
+      "flags": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Bandeiras para o registro da CAA.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Valor do registro. A semântica desse campo depende da tag escolhida.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo de CAA formatado. Consulte \"data\" para definir as propriedades do CAA.",
+      "isOptional": true
+    }
+  },
+  "CERTRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algoritmo.",
+        "isOptional": true
+      },
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Certificado.",
+        "isOptional": true
+      },
+      "key_tag": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tag principal.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo CERT formatado. Consulte \"data\" para definir as propriedades da CERT.",
+      "isOptional": true
+    }
+  },
+  "CNAMERecord": {
+    "content": {
+      "type": "unknown",
+      "fullTypeName": "unknown",
+      "description": "Um nome de host válido. Não deve corresponder ao nome do registro.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Se o registro está recebendo os benefícios de desempenho e segurança da\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "DNSKEYRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algoritmo.",
+        "isOptional": true
+      },
+      "flags": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Sinalizadores.",
+        "isOptional": true
+      },
+      "protocol": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Protocolo.",
+        "isOptional": true
+      },
+      "public_key": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Chave pública.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo formatado do DNSKEY. Consulte \"data\" para definir as propriedades do DNSKEY.",
+      "isOptional": true
+    }
+  },
+  "DSRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algoritmo.",
+        "isOptional": true
+      },
+      "digest": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Composição.",
+        "isOptional": true
+      },
+      "digest_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tipo de classificação.",
+        "isOptional": true
+      },
+      "key_tag": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tag principal.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo formatado do DS. Consulte \"data\" para definir as propriedades do DS.",
+      "isOptional": true
+    }
+  },
+  "HTTPSRecord": {
+    "data": {
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "prioridade.",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "alvo.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "valor.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo HTTPS formatado. Consulte \"data\" para definir as propriedades de HTTPS.",
+      "isOptional": true
+    }
+  },
+  "LOCRecord": {
+    "data": {
+      "altitude": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Altitude do local em metros.",
+        "isOptional": true
+      },
+      "lat_degrees": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Graus de latitude.",
+        "isOptional": true
+      },
+      "lat_direction": {
+        "type": "\"N\" | \"S\"",
+        "fullTypeName": "\"N\" | \"S\"",
+        "description": "Direção da latitude.",
+        "isOptional": true
+      },
+      "lat_minutes": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Minutos de latitude.",
+        "isOptional": true
+      },
+      "lat_seconds": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Segundos de latitude.",
+        "isOptional": true
+      },
+      "long_degrees": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Graus de longitude.",
+        "isOptional": true
+      },
+      "long_direction": {
+        "type": "\"E\" | \"W\"",
+        "fullTypeName": "\"E\" | \"W\"",
+        "description": "Direção da longitude.",
+        "isOptional": true
+      },
+      "long_minutes": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Minutos de longitude.",
+        "isOptional": true
+      },
+      "long_seconds": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Segundos de longitude.",
+        "isOptional": true
+      },
+      "precision_horz": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Precisão horizontal da localização.",
+        "isOptional": true
+      },
+      "precision_vert": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Precisão vertical da localização.",
+        "isOptional": true
+      },
+      "size": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tamanho do local em metros.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo LOC formatado. Consulte \"data\" para definir as propriedades do LOC.",
+      "isOptional": true
+    }
+  },
+  "MXRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Um nome de host de servidor de correio eletrônico válido.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "priority": {
+      "type": "number",
+      "fullTypeName": "number",
+      "description": "Necessário para registros MX, SRV e URI; não utilizado por outros tipos de registro. Registros com prioridades mais baixas são preferidos.",
+      "isOptional": false
+    }
+  },
+  "NAPTRRecord": {
+    "data": {
+      "flags": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Sinalizadores.",
+        "isOptional": true
+      },
+      "order": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Pedido.",
+        "isOptional": true
+      },
+      "preference": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Preferência.",
+        "isOptional": true
+      },
+      "regex": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Regex.",
+        "isOptional": true
+      },
+      "replacement": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Substituição.",
+        "isOptional": true
+      },
+      "service": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Serviço.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo NAPTR formatado. Consulte 'data' para definir as propriedades NAPTR.",
+      "isOptional": true
+    }
+  },
+  "NSRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Um nome de host de servidor de nomes válido.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    }
+  },
+  "PTRRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome de domínio que aponta para o endereço.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    }
+  },
+  "SMIMEARecord": {
+    "data": {
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Certificado.",
+        "isOptional": true
+      },
+      "matching_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tipo de correspondência.",
+        "isOptional": true
+      },
+      "selector": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Seletor.",
+        "isOptional": true
+      },
+      "usage": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Uso.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo SMIMEA formatado. Consulte \"data\" para definir as propriedades do SMIMEA.",
+      "isOptional": true
+    }
+  },
+  "SRVRecord": {
+    "data": {
+      "name": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "port": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "A porta do serviço.",
+        "isOptional": true
+      },
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Necessário para registros MX, SRV e URI; não utilizado por outros tipos de registro. Registros com prioridades mais baixas são preferidos.",
+        "isOptional": true
+      },
+      "proto": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "service": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Um nome de host válido.",
+        "isOptional": true
+      },
+      "weight": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "O peso recorde.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o vértice da zona) em Punycode. Para registros SRV, o primeiro rótulo normalmente é um serviço e o segundo é um nome de protocolo, cada um começando com\num sublinhado.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Prioridade, peso, porta e destino SRV. Consulte \"dados\" para definir os valores\nvalores individuais dos componentes.",
+      "isOptional": true
+    }
+  },
+  "SSHFPRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "algoritmo.",
+        "isOptional": true
+      },
+      "fingerprint": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "impressão digital.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo formatado do SSHFP. Consulte 'data' para definir as propriedades do SSHFP.",
+      "isOptional": true
+    }
+  },
+  "SVCBRecord": {
+    "data": {
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "prioridade.",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "alvo.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "valor.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo formatado do SVCB. Consulte \"data\" para definir as propriedades do SVCB.",
+      "isOptional": true
+    }
+  },
+  "TLSARecord": {
+    "data": {
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "certificado.",
+        "isOptional": true
+      },
+      "matching_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Tipo de correspondência.",
+        "isOptional": true
+      },
+      "selector": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Seletor.",
+        "isOptional": true
+      },
+      "usage": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Uso.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo TLSA formatado. Consulte \"data\" para definir as propriedades da TLSA.",
+      "isOptional": true
+    }
+  },
+  "TXTRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo do texto para o registro.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    }
+  },
+  "URIRecord": {
+    "data": {
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "O conteúdo do registro.",
+        "isOptional": true
+      },
+      "weight": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "O peso recorde.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Nome do registro DNS (ou @ para o nome da zona) em Punycode.",
+      "isOptional": false
+    },
+    "priority": {
+      "type": "number",
+      "fullTypeName": "number",
+      "description": "Necessário para registros MX, SRV e URI; não utilizado por outros tipos de registro. Registros com prioridades mais baixas são preferidos.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Conteúdo formatado do URI. Consulte \"data\" para definir as propriedades do URI.",
+      "isOptional": true
+    }
+  }
+}

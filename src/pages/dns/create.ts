@@ -1,35 +1,44 @@
 import { Page } from '@/class/pages.js'
 import { question } from '@/class/questions.js'
 import { zone } from '@/index.js'
-import { extractTypes, Properties } from '@/lib/extractTypes.js'
 import { PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 import { rootPath } from '@/index.js'
 import { join } from 'path'
 import { client } from '@/controller/cloudflare.js'
 import { QuestionTypes } from '@/types/questions.js'
+import { readFile } from 'fs/promises'
+import i18next from 'i18next'
+
+type Properties = {
+type: string,
+fullTypeName: string
+description: string
+isOptional: boolean
+properties: Record<string, Properties>
+}
 
 enum RecordsType {
-    ARecord = 'A',
-    AAAARecord = 'AAAA',
-    CAARecord = 'CAA',
-    CERTRecord = 'CERT',
-    CNAMERecord = 'CNAME',
-    DNSKEYRecord = 'DNSKEY',
-    DSRecord = 'DS',
-    HTTPSRecord = 'HTTPS',
-    LOCRecord = 'LOC',
-    MXRecord = 'MX',
-    NAPTRRecord = 'NAPTR',
-    NSRecord = 'NS',
-    PTRRecord = 'PTR',
-    SMIMEARecord = 'SMIMEA',
-    SRVRecord = 'SRV',
-    SSHFPRecord = 'SSHFP',
-    SVCBRecord = 'SVCB',
-    TLSARecord = 'TLSA',
-    TXTRecord = 'TXT',
-    URIRecord = 'URI'
+  ARecord = 'A',
+  AAAARecord = 'AAAA',
+  CAARecord = 'CAA',
+  CERTRecord = 'CERT',
+  CNAMERecord = 'CNAME',
+  DNSKEYRecord = 'DNSKEY',
+  DSRecord = 'DS',
+  HTTPSRecord = 'HTTPS',
+  LOCRecord = 'LOC',
+  MXRecord = 'MX',
+  NAPTRRecord = 'NAPTR',
+  NSRecord = 'NS',
+  PTRRecord = 'PTR',
+  SMIMEARecord = 'SMIMEA',
+  SRVRecord = 'SRV',
+  SSHFPRecord = 'SSHFP',
+  SVCBRecord = 'SVCB',
+  TLSARecord = 'TLSA',
+  TXTRecord = 'TXT',
+  URIRecord = 'URI'
 }
 
 new Page({
@@ -57,18 +66,17 @@ new Page({
       return options
     }
 
-    /**
-     * Isso converte as tipagens do cloudflare.
-     * @returns {Record<string, Properties> | undefined}
-     */
-    const pathToCloudflare = join(rootPath, '..', 'node_modules/cloudflare/src/resources/dns/records.ts')
-    const properties = extractTypes(pathToCloudflare, record)
+    const properties = JSON.parse(await readFile(`${join(rootPath, '..')}/locales/${i18next.language}/cloudflare.json`, { encoding: 'utf-8' }))[record] as Record<string, Properties>
+
+    // console.log(properties)
+
     if (properties === undefined) throw new Error(`Não foi possivel achar os types de ${record}`)
 
     /**
      * Converte para o formato utilizado no snippet do enquirer.
      */
-    const variables = Object.entries(properties).map(([name, { description, fullTypeName, properties, isOptional }]) => {
+    const variables = Object.entries(properties).map(([name, properties]) => {
+      const { description, fullTypeName, isOptional } = properties
       if ([
         'zone_id', 'zone_name', 'type', 'id',
         'ttl', 'tags', 'proxiable', 'modified_on',
@@ -78,18 +86,17 @@ new Page({
 
       let steps = 1
 
-      const convertProperties = (props: Record<string, Properties>): string => {
+      const convertProperties = (props: Properties): string => {
         let result = ''
         const all = Object.keys(props).length
         let actual = 0
         Object.entries(props).forEach(([propName, propDetails]) => {
-          const { description, fullTypeName, properties, isOptional } = propDetails
+          const { description, fullTypeName, isOptional } = propDetails as unknown as Properties
           const spaces = '    '.repeat(steps)
           actual++
-          if (properties) {
-            result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ', optional' : ''}] ${description.length === 0 ? propName : description}}"${actual < all ? ',' : ''}\n`
+          if (description === undefined) {
             steps++
-            result += convertProperties(properties) // Chamada recursiva para propriedades aninhadas
+            result += convertProperties(propDetails as unknown as Properties) // Chamada recursiva para propriedades aninhadas
           } else {
             result += `${spaces}"${propName}": "\${[${fullTypeName}${isOptional ? ', optional' : ''}] ${description.length === 0 ? propName : description}}"${actual < all ? ',' : ''}\n`
           }
@@ -101,7 +108,7 @@ new Page({
 
       let output = ''
       
-      if (properties) {
+      if (description === undefined) {
         output += `"${name}": {\n`
         output += convertProperties(properties)
         output += '}'

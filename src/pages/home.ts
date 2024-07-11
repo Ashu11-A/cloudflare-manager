@@ -9,7 +9,7 @@ export default new Page({
   name: 'home',
   loaders: [],
   requirements: [credentials],
-  type: PageTypes.Option,
+  type: PageTypes.Command,
   async run(options) {
     const [credentials] = options.interaction.requirements
     const nextPage = await question({

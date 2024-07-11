@@ -1,0 +1,674 @@
+{
+  "ARecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "A valid IPv4 address.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Whether the record is receiving the performance and security benefits of\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "AAAARecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "A valid IPv6 address.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Whether the record is receiving the performance and security benefits of\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "CAARecord": {
+    "data": {
+      "flags": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Flags for the CAA record.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Value of the record. This field's semantics depend on the chosen tag.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted CAA content. See 'data' to set CAA properties.",
+      "isOptional": true
+    }
+  },
+  "CERTRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algorithm.",
+        "isOptional": true
+      },
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Certificate.",
+        "isOptional": true
+      },
+      "key_tag": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Key Tag.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted CERT content. See 'data' to set CERT properties.",
+      "isOptional": true
+    }
+  },
+  "CNAMERecord": {
+    "content": {
+      "type": "unknown",
+      "fullTypeName": "unknown",
+      "description": "A valid hostname. Must not match the record's name.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "proxied": {
+      "type": "boolean",
+      "fullTypeName": "false | true",
+      "description": "Whether the record is receiving the performance and security benefits of\nCloudflare.",
+      "isOptional": true
+    }
+  },
+  "DNSKEYRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algorithm.",
+        "isOptional": true
+      },
+      "flags": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Flags.",
+        "isOptional": true
+      },
+      "protocol": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Protocol.",
+        "isOptional": true
+      },
+      "public_key": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Public Key.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted DNSKEY content. See 'data' to set DNSKEY properties.",
+      "isOptional": true
+    }
+  },
+  "DSRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Algorithm.",
+        "isOptional": true
+      },
+      "digest": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Digest.",
+        "isOptional": true
+      },
+      "digest_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Digest Type.",
+        "isOptional": true
+      },
+      "key_tag": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Key Tag.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted DS content. See 'data' to set DS properties.",
+      "isOptional": true
+    }
+  },
+  "HTTPSRecord": {
+    "data": {
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "priority.",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "target.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "value.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted HTTPS content. See 'data' to set HTTPS properties.",
+      "isOptional": true
+    }
+  },
+  "LOCRecord": {
+    "data": {
+      "altitude": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Altitude of location in meters.",
+        "isOptional": true
+      },
+      "lat_degrees": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Degrees of latitude.",
+        "isOptional": true
+      },
+      "lat_direction": {
+        "type": "\"N\" | \"S\"",
+        "fullTypeName": "\"N\" | \"S\"",
+        "description": "Latitude direction.",
+        "isOptional": true
+      },
+      "lat_minutes": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Minutes of latitude.",
+        "isOptional": true
+      },
+      "lat_seconds": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Seconds of latitude.",
+        "isOptional": true
+      },
+      "long_degrees": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Degrees of longitude.",
+        "isOptional": true
+      },
+      "long_direction": {
+        "type": "\"E\" | \"W\"",
+        "fullTypeName": "\"E\" | \"W\"",
+        "description": "Longitude direction.",
+        "isOptional": true
+      },
+      "long_minutes": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Minutes of longitude.",
+        "isOptional": true
+      },
+      "long_seconds": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Seconds of longitude.",
+        "isOptional": true
+      },
+      "precision_horz": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Horizontal precision of location.",
+        "isOptional": true
+      },
+      "precision_vert": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Vertical precision of location.",
+        "isOptional": true
+      },
+      "size": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Size of location in meters.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted LOC content. See 'data' to set LOC properties.",
+      "isOptional": true
+    }
+  },
+  "MXRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "A valid mail server hostname.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "priority": {
+      "type": "number",
+      "fullTypeName": "number",
+      "description": "Required for MX, SRV and URI records; unused by other record types. Records with\nlower priorities are preferred.",
+      "isOptional": false
+    }
+  },
+  "NAPTRRecord": {
+    "data": {
+      "flags": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Flags.",
+        "isOptional": true
+      },
+      "order": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Order.",
+        "isOptional": true
+      },
+      "preference": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Preference.",
+        "isOptional": true
+      },
+      "regex": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Regex.",
+        "isOptional": true
+      },
+      "replacement": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Replacement.",
+        "isOptional": true
+      },
+      "service": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Service.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted NAPTR content. See 'data' to set NAPTR properties.",
+      "isOptional": true
+    }
+  },
+  "NSRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "A valid name server host name.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    }
+  },
+  "PTRRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Domain name pointing to the address.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    }
+  },
+  "SMIMEARecord": {
+    "data": {
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "Certificate.",
+        "isOptional": true
+      },
+      "matching_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Matching Type.",
+        "isOptional": true
+      },
+      "selector": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Selector.",
+        "isOptional": true
+      },
+      "usage": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Usage.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted SMIMEA content. See 'data' to set SMIMEA properties.",
+      "isOptional": true
+    }
+  },
+  "SRVRecord": {
+    "data": {
+      "name": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "port": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "The port of the service.",
+        "isOptional": true
+      },
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Required for MX, SRV and URI records; unused by other record types. Records with\nlower priorities are preferred.",
+        "isOptional": true
+      },
+      "proto": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "service": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "A valid hostname.",
+        "isOptional": true
+      },
+      "weight": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "The record weight.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode. For SRV records, the first\nlabel is normally a service and the second a protocol name, each starting with\nan underscore.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Priority, weight, port, and SRV target. See 'data' for setting the individual\ncomponent values.",
+      "isOptional": true
+    }
+  },
+  "SSHFPRecord": {
+    "data": {
+      "algorithm": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "algorithm.",
+        "isOptional": true
+      },
+      "fingerprint": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "fingerprint.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted SSHFP content. See 'data' to set SSHFP properties.",
+      "isOptional": true
+    }
+  },
+  "SVCBRecord": {
+    "data": {
+      "priority": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "priority.",
+        "isOptional": true
+      },
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "target.",
+        "isOptional": true
+      },
+      "value": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "value.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted SVCB content. See 'data' to set SVCB properties.",
+      "isOptional": true
+    }
+  },
+  "TLSARecord": {
+    "data": {
+      "certificate": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "certificate.",
+        "isOptional": true
+      },
+      "matching_type": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Matching Type.",
+        "isOptional": true
+      },
+      "selector": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Selector.",
+        "isOptional": true
+      },
+      "usage": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "Usage.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted TLSA content. See 'data' to set TLSA properties.",
+      "isOptional": true
+    }
+  },
+  "TXTRecord": {
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Text content for the record.",
+      "isOptional": false
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    }
+  },
+  "URIRecord": {
+    "data": {
+      "target": {
+        "type": "string",
+        "fullTypeName": "string",
+        "description": "The record content.",
+        "isOptional": true
+      },
+      "weight": {
+        "type": "number",
+        "fullTypeName": "number",
+        "description": "The record weight.",
+        "isOptional": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "DNS record name (or @ for the zone apex) in Punycode.",
+      "isOptional": false
+    },
+    "priority": {
+      "type": "number",
+      "fullTypeName": "number",
+      "description": "Required for MX, SRV and URI records; unused by other record types. Records with\nlower priorities are preferred.",
+      "isOptional": false
+    },
+    "content": {
+      "type": "string",
+      "fullTypeName": "string",
+      "description": "Formatted URI content. See 'data' to set URI properties.",
+      "isOptional": true
+    }
+  }
+}
