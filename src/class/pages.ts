@@ -1,4 +1,4 @@
-import { rootPath, page } from '@/index.js'
+import { page, rootPath } from '@/index.js'
 import { PageProps, PageTypes } from '@/types/page.js'
 import chalk from 'chalk'
 import 'dotenv/config'
@@ -9,15 +9,13 @@ import Cache from './cache.js'
 
 const spinner = ora()
 
-export class Page<PageTyper extends PageTypes, Req = any, Loader = any> {
-  static all: Page<PageTypes, any, any>[] = []
+export class Page<PageGeneric extends PageTypes, Req = any, Loader = any> {
+  static all: Page<PageTypes>[] = []
   static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
-  interaction: PageProps<PageTyper, Req, Loader>
   result?: string
 
-  constructor(options: PageProps<PageTyper, Req, Loader>) {
-    this.interaction = options
+  constructor(public interaction: PageProps<PageGeneric, Req, Loader>) {
     Page.all.push(this)
   }
 
@@ -80,15 +78,15 @@ export class Page<PageTyper extends PageTypes, Req = any, Loader = any> {
     if (page === undefined) throw new Error('404 | Page not found!')
 
     if (
-      page.interaction.requirements !== undefined && page.interaction.requirements.length > 0 && 
+      page.interaction.requirements !== undefined && page.interaction.requirements.length > 0 &&
       page.interaction.loaders !== undefined && page.interaction.loaders.length > 0
-        
+
     ) {
       spinner.start()
       for (const cache of page.interaction.requirements) {
         if (cache.exist()) continue
 
-        for (const [index, fn] of Object.entries(page.interaction.loaders)) {
+        for (const [index, fn] of Object.entries<any>(page.interaction.loaders)) {
           spinner.text = `Carregando loaders ${chalk.green(Number(index) + 1)}`
           await fn()
         }

@@ -8,6 +8,7 @@ import { QuestionTypes } from '@/types/questions.js'
 new Page({
   name: 'dns-search',
   previous: 'dns',
+  next: 'dns',
   type: PageTypes.SubCommand,
   loaders: [async () => records.save((await client.dns.records.list({ zone_id: zone.getData().id })).result)],
   requirements: [records],

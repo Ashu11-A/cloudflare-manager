@@ -13,23 +13,17 @@ export enum PageTypes {
 }
 
 /**
- * Properties specific to each page type.
+ * Base Page Properties
  *
- * @export
- * @type {object} PageProps
- * @template {PageTypes} PageTyper - The type of the page.
- * @template Req - The requirements for the page.
- * @template Loader - The loader functions for the page.
+ * @type {PageSchema}
+ * @template Req
+ * @template Loader
  * 
  * @property {string} name - The name of the page.
  * @property {Req[]} requirements - Requirements that the page needs.
  * @property {Loader[]} loaders - This will be executed if a request is not completed.
- * @property {PageTypes} type - The type of the page, which depends on the PageTyper.
- * @property {string} [next] - The next page in the sequence if the current page type is Command or SubCommand.
- * @property {string} [previous] - The previous page in the sequence if the current page type is Option or SubCommand.
- * @property {(options: Page<PageTyper, Req, Loader>) => Promise<Page<PageTyper, Req, Loader>>} run - Function to run for this page.
  */
-export type PageProps<PageTyper extends PageTypes, Req, Loader> = ({
+type PageSchema<Req, Loader> = {
     /**
      * The name of the page.
      * @type {string}
@@ -47,18 +41,58 @@ export type PageProps<PageTyper extends PageTypes, Req, Loader> = ({
      * @type {Loader[]}
      */
     loaders: Loader[],
-    
-    /**
-     * The type of the page, which depends on the PageTyper.
-     * @type {PageTypes}
-     */
-    type: PageTyper extends PageTypes.Command 
-        ? PageTypes.Command
-        : PageTyper extends PageTypes.SubCommand
-        ? PageTypes.SubCommand
-        : PageTyper extends PageTypes.Option
-        ? PageTypes.Option
-        : never
+}
+
+
+/**
+ * Page Option Properties
+ *
+ * @export
+ * @type {PageOption}
+ * 
+ * @property {PageTypes} type - The type of the page, which depends on the PageTyper.
+ * @property {string} [next] - The next page in the sequence if the current page type is Command or SubCommand.
+ */
+export type PageOption = {
+    type: PageTypes.Option,
+    previous: string,
+}
+
+/**
+ * Page SubCommand Properties
+ *
+ * @export
+ * @type {SubCommand}
+ * 
+ * @property {PageTypes} type - The type of the page, which depends on the PageTyper.
+ * @property {string} [next] - The next page in the sequence if the current page type is Command or SubCommand.
+ * @property {string} [previous] - The previous page in the sequence if the current page type is Option or SubCommand.
+ */
+export type PageSubCommand = {
+    type: PageTypes.SubCommand,
+    previous: string,
+    next: string
+}
+
+/**
+ * Page Command Properties
+ *
+ * @export
+ * @type {SubCommand}
+ * 
+ * @property {PageTypes} type - The type of the page, which depends on the PageTyper.
+ */
+export type PageCommand = {
+    type:PageTypes.Command,
+}
+
+/**
+ * Properties specific to each page type.
+ *
+ * @export
+ * @property {(options: Page<PageTyper, Req, Loader>) => Promise<Page<PageTyper, Req, Loader>>} run - Function to run for this page.
+ */
+export type PageProps<PageTyper extends PageTypes, Req, Loader> = (PageSchema<Req, Loader>) & (PageOption | PageSubCommand | PageCommand) & ({
 
     /**
      * The next page in the sequence if the current page type is Command or SubCommand.

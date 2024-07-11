@@ -9,7 +9,8 @@ new Page({
   loaders: [],
   requirements: [],
   next: 'home',
-  type: PageTypes.Command,
+  previous: 'home',
+  type: PageTypes.SubCommand,
   async run(options) {
     const email = await question({
       type: QuestionTypes.Input,
