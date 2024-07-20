@@ -1,7 +1,7 @@
-import { credentials } from '@/class/crypt.js'
 import { Page } from '@/class/pages.js'
 import { question } from '@/class/questions.js'
 import { i18 } from '@/controller/lang.js'
+import { credentials } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { Separator } from '@inquirer/prompts'
 

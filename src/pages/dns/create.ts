@@ -8,7 +8,7 @@ import { join } from 'path'
 import { client } from '@/controller/cloudflare.js'
 import { QuestionTypes } from '@/types/questions.js'
 import { readFile } from 'fs/promises'
-import i18next from 'i18next'
+import { Lang } from '@/controller/lang.js'
 
 type Properties = {
 type: string,
@@ -66,7 +66,7 @@ new Page({
       return options
     }
 
-    const properties = JSON.parse(await readFile(`${join(rootPath, '..')}/locales/${i18next.language}/cloudflare.json`, { encoding: 'utf-8' }))[record] as Record<string, Properties>
+    const properties = JSON.parse(await readFile(`${join(rootPath, '..')}/locales/${Lang.language}/cloudflare.json`, { encoding: 'utf-8' }))[record] as Record<string, Properties>
 
     // console.log(properties)
 

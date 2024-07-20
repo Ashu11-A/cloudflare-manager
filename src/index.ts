@@ -38,3 +38,5 @@ export const zone: Cache<{ name: string, id: string }> = new Cache<{ name: strin
  * @type {Cache<Record[]>}
  */
 export const records: Cache<Record[]> = new Cache<Record[]>('records')
+
+export const credentials = new Map<string, string | object | boolean | number>()

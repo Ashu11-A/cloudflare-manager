@@ -1,8 +1,9 @@
-import { i18, Lang } from '@/controller/lang.js'
-import { rootPath } from '@/index.js'
+import { i18, lang } from '@/controller/lang.js'
+import { credentials, rootPath } from '@/index.js'
 import { exists } from '@/lib/exists.js'
 import { isJson } from '@/lib/validate.js'
 import { DataCrypted } from '@/types/crypt.js'
+import { QuestionTypes } from '@/types/questions.js'
 import * as argon2 from 'argon2'
 import { passwordStrength } from 'check-password-strength'
 import { watch } from 'chokidar'
@@ -12,9 +13,6 @@ import { readFile, rm, writeFile } from 'fs/promises'
 import forge from 'node-forge'
 import { join } from 'path'
 import { question } from './questions.js'
-import { QuestionTypes } from '@/types/questions.js'
-
-export const credentials = new Map<string, string | object | boolean | number>()
 
 export class Crypt {
   async checker () {
@@ -127,7 +125,7 @@ export class Crypt {
     if (await exists(join(rootPath, '..', '.hash'))) await rm(join(rootPath, '..', '.hash'))
   }
 
-  async read (ephemeral?: boolean): Promise<DataCrypted | undefined> {
+  async read (ephemeral?: boolean, changeLang: boolean = true): Promise<DataCrypted | undefined> {
     const token = await this.getToken()
     if (token === undefined) return
     const existKey = await exists(join(rootPath, '..', '.key'))
@@ -143,7 +141,7 @@ export class Crypt {
 
       const outputData = JSON.parse(AESCrypt) as DataCrypted
 
-      if (outputData.language !== undefined) new Lang().setLanguage(outputData.language)
+      if (outputData.language !== undefined && changeLang) lang.setLanguage(outputData.language)
 
 
       for (const [key, value] of Object.entries(outputData) as Array<[string, string | object | boolean | number]>) {
@@ -164,7 +162,7 @@ export class Crypt {
     const token = await this.getToken()
     if (token === undefined) return
   
-    const data = Object.assign(await this.read(true) ?? {}, value)
+    const data = Object.assign(await this.read(true, false) ?? {}, value)
 
     const AESCrypt = CryptoJS.AES.encrypt(JSON.stringify(data), token).toString()
     const BlowfishCrypt = CryptoJS.Blowfish.encrypt(AESCrypt, token).toString()

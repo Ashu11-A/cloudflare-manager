@@ -95,13 +95,13 @@ export class Page<PageGeneric extends PageTypes, Req = any, Loader = any> {
 
     switch (page.interaction.type) {
     case PageTypes.Option:
-      await page.interaction.run(page)
+      page.interaction.run(page)
       break
     case PageTypes.Command:
-      await page.interaction.run(page)
+      page.interaction.run(page)
       break
     case PageTypes.SubCommand:
-      await page.interaction.run(page)
+      page.interaction.run(page)
     }
   }
 }

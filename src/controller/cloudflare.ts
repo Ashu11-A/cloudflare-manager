@@ -1,4 +1,4 @@
-import { credentials } from '@/class/crypt.js'
+import { credentials } from '@/index.js'
 import Cloudflare from 'cloudflare'
 
 const createClient = async () => {

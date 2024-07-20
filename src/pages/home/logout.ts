@@ -1,5 +1,6 @@
-import { credentials, Crypt } from '@/class/crypt.js'
+import { Crypt } from '@/class/crypt.js'
 import { Page } from '@/class/pages.js'
+import { credentials } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 
 new Page({

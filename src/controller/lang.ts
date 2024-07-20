@@ -1,65 +1,62 @@
 import { Crypt } from '@/class/crypt.js'
-import { question } from '@/class/questions.js'
-import { rootPath } from '@/index.js'
+import { credentials, rootPath } from '@/index.js'
 import { exists } from '@/lib/exists.js'
-import { QuestionTypes } from '@/types/questions.js'
-import flags from 'country-code-to-flag-emoji'
-import { glob } from 'glob'
-import i18next, { TFunction } from 'i18next'
-import Backend, { FsBackendOptions } from 'i18next-fs-backend'
+import { LangProps, Paths, ValueOfLang } from '@/types/lang.js'
+import { readFile } from 'fs/promises'
 import { join } from 'path'
+import langBase from '../../locales/en/translation.json'
+import { glob } from 'glob'
 
-export class Lang {  
-  async setLanguage (lang: string, change?: boolean) {
-    const path = join(rootPath, '..', 'locales', lang)
+const cache = new Map<string, typeof langBase>()
+
+const path = join(rootPath, '..', 'locales')
+const allLangs = (await glob('**/translation.json', { cwd: path }))
+
+for (const lang of allLangs) {
+  cache.set(lang.split('/')[0], JSON.parse(await readFile(join(path, lang), { encoding: 'utf-8' })))
+}
+
+export class Lang {
+  static language: string
+
+  constructor ({ language }: LangProps) {
+    Lang.language = language
+  }
+
+  get<P extends Paths<typeof langBase>>(path: P, metadata?: Record<string, string>): ValueOfLang<typeof langBase, P> | string {
+    const keys = path.split('.') as Array<string>
+    let result: string | undefined | object
+    const data = cache.get(Lang.language) as any | undefined
+
+    if (data === undefined) throw new Error('Cache not defined fotr languages')
+
+    for (const key of keys) {
+      if (result === undefined) { result = data[key]; continue }
+      if (typeof result === 'object') { result = (result as Record<string, string>)[key]; continue }
+    }
+
+    if (metadata !== undefined){
+      for (const [key, data] of Object.entries(metadata)) {
+        (result as string).replaceAll(key, data)
+      }
+    }
+
+    return result as string
+  }
+
+  async setLanguage (newLang: string, change?: boolean) {
+    const path = join(rootPath, '..', 'locales', newLang)
     const crypt = new Crypt()
     
     if (!(await exists(path))) {
-      console.log(`⛔ The selected language (${lang}) does not exist, using English by default`)
-      await i18next.changeLanguage('en')
-      if (change) await crypt.write({ language: 'en' })
-    } else {
-      await i18next.changeLanguage(lang)
-      if (change) await crypt.write({ language: lang })
+      console.log(`⛔ The selected language (${newLang}) does not exist, using English by default`)
+      newLang = 'en'
     }
-  }
-  
-  async selectLanguage () {
-    const path = join(rootPath, '..', 'locales')
-    const allLangs = (await glob('**/*.json', { cwd: path })).map((lang) => lang.split('/')[0])
-    const langs = []
-    for (const lang of allLangs) {
-      if (langs.filter((langExist) => langExist === lang).length == 0) langs.push(lang)
-    }
-    const choices = langs.map((lang) => ({ name: `${flags(lang)} - ${lang}`, value: lang }))
-    const response = await question({
-      type: QuestionTypes.Select,
-      message: 'Which language should I continue with?',
-      choices
-    })
-    if (response === undefined) throw new Error('Please select a language')
-    this.setLanguage(response, true)
-  }
-  /**
-   * Inicializar i18
-  */
-  async create () {
-    return await i18next.use(Backend).init<FsBackendOptions>({
-      debug: true,
-      initImmediate: false,
-      lng: i18next.language ?? 'en',
-      fallbackLng: 'en',
-      backend: {
-        loadPath: join(rootPath, '..', 'locales', '{{lng}}', '{{ns}}.json'),
-      }
-    })
 
+    Lang.language = newLang
+    if (change) await crypt.write({ language: newLang })
   }
 }
 
-/**
- * Package language controller
- *
- * @type {TFunction<'translation', undefined>}
- */
-export const i18: TFunction<'translation', undefined> = i18next.isInitialized ? i18next.t : await new Lang().create()
+export const lang = new Lang({ language: credentials.get('language') as string ?? 'en' })
+export const i18 = lang.get
