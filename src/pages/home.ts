@@ -4,6 +4,7 @@ import { i18 } from '@/controller/lang.js'
 import { credentials } from '@/index.js'
 import { PageTypes } from '@/types/page.js'
 import { Separator } from '@inquirer/prompts'
+import About from './home/about.js'
 
 export default new Page({
   name: 'home',
@@ -49,7 +50,13 @@ export default new Page({
       ]
     })
 
-    options.reply(nextPage)
+    if (nextPage === 'about') {
+      About.interaction.previous = 'home'
+      About.interaction.run(About)
+    } else {
+      options.reply(nextPage)
+    }
+
     return options
   },
 })

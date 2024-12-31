@@ -12,13 +12,13 @@ export class Page<PageGeneric extends PageTypes, Req = any, Loader = any> {
   static all: Page<PageTypes>[] = []
   static find(name: string) { return Page.all.find((page) => page.interaction.name === name) }
 
-  result?: string
+  private result?: string
 
   constructor(public interaction: PageProps<PageGeneric, Req, Loader>) {
     Page.all.push(this)
   }
 
-  async setResult(result: string) {
+  setResult(result: string) {
     this.result = result
   }
 

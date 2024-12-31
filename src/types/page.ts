@@ -10,6 +10,7 @@ export enum PageTypes {
     Command = 'Command',
     Option = 'Option',
     SubCommand = 'SubCommand',
+    Doc = 'Doc'
 }
 
 /**
@@ -85,6 +86,21 @@ export type PageSubCommand = {
 export type PageCommand = {
     type:PageTypes.Command,
 }
+
+/**
+ * Page Option Properties
+ *
+ * @export
+ * @type {PageOption}
+ * 
+ * @property {PageTypes} type - The type of the page, which depends on the PageTyper.
+ * @property {string} [next] - The next page in the sequence if the current page type is Command or SubCommand.
+ */
+export type PageDoc = {
+    type: PageTypes.Option,
+    previous: string,
+}
+
 
 /**
  * Properties specific to each page type.

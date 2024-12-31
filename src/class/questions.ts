@@ -68,7 +68,7 @@ class Question {
       const footerBar: { name: string, value: string }[] = []
 
       if (pageSelect !== undefined) {
-        if (pageSelect.interaction.type !== PageTypes.Option) footerBar.push({
+        if (![PageTypes.Option, PageTypes.Doc].includes(pageSelect.interaction.type)) footerBar.push({
           name: '🔄 Recarregar',
           value: 'reload'
         })
@@ -76,12 +76,12 @@ class Question {
           name: '↩️  Voltar',
           value: 'back'
         })
-        if (pageSelect.interaction.type !== PageTypes.Command) footerBar.push({
+        if (![PageTypes.Option, PageTypes.Doc].includes(pageSelect.interaction.type)) footerBar.push({
           name: '📍 Home',
           value: 'home'
         })
       }
-      footerBar.push({
+      if (![PageTypes.Doc].includes(pageSelect.interaction.type)) footerBar.push({
         name: '❌ Sair',
         value: 'exit',
       })
